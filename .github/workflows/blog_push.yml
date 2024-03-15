@@ -62,7 +62,7 @@ jobs:
  
       - name: Deploy hexo
         run: |
-          # npm run build
+          npm run build
           npm run deploy
 
       # 推送到远端服务器
@@ -71,7 +71,7 @@ jobs:
         with:
           # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
           switches: -avzh --delete
-          path: .deploy_git
+          path: public/
           remote_path: /var/www/myblog
           remote_host: 121.36.61.23
           remote_port: 22
