@@ -23,23 +23,28 @@ jobs:
         node_version: [16.x]
 
     steps:
+    # 将当前所在repository拉取到github的虚拟机容器工作目录下
       - name: Checkout
         uses: actions/checkout@v4
 
+    # 因为hexo使用的theme主题是一个单独的git仓库项目, 给blog_push仓库push更新时会忽略其中嵌套的repo仓库
+    # 所以事实上blog_push.git中是没有theme相关文件的, 需要额外的拉取, 同理放入容器的工作目录下
       - name: Checkout theme repo
         uses: actions/checkout@v4
         with:
           repository: ${{ env.THEME_REPO }}
           ref: ${{ env.THEME_BRANCH }}
-          path: themes/hexo-theme-butterfly
+          path: themes/hexo-theme-butterfly # 这里指定了拉取之后存放的路径
 
+    # 同样的hexo-deploy工具也是一个独立的repo仓库, 需要额外拉取
       - name: Checkout deploy repo
         uses: actions/checkout@v4
         with:
           repository: ${{ env.DEPLOY_REPO }}
           ref: ${{ env.DEPLOY_BRANCH }}
-          path: .deploy_git
+          path: .deploy_git # 指定存放到push_blog同级目录下
 
+    # 安装node.js, 配置node环境
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v4
         with:
@@ -54,6 +59,7 @@ jobs:
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-keyscan 121.36.61.23 >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
           # cp _config.butterfly.yml themes/hexo-theme-butterfly/_config.yml
@@ -65,3 +71,16 @@ jobs:
       - name: Deploy hexo
         run: |
           npm run deploy
+
+      # 同步到远程服务器
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
+          switches: -avzh --delete
+          path: .deploy_git
+          remote_path: /var/www/hexo
+          remote_host: 121.36.61.23
+          remote_port: 22
+          remote_user: root
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
