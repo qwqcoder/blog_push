@@ -1,6 +1,6 @@
 ---
 tags: hexo
-title: hexo的使用
+title: hexo
 ---
 
 

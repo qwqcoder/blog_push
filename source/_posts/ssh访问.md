@@ -1,5 +1,5 @@
 ---
-title: ssh连接
+title: ssh访问
 tags: [ssh, rsa加密]
 ---
 
