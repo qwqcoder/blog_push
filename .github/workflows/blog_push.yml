@@ -36,13 +36,13 @@ jobs:
           ref: ${{ env.THEME_BRANCH }}
           path: themes/hexo-theme-butterfly # 这里指定了拉取之后存放的路径
 
-    # 同样的hexo-deploy工具也是一个独立的repo仓库, 需要额外拉取
-      - name: Checkout deploy repo
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.DEPLOY_REPO }}
-          ref: ${{ env.DEPLOY_BRANCH }}
-          path: .deploy_git # 指定存放到push_blog同级目录下
+    # # 同样的hexo-deploy工具也是一个独立的repo仓库, 需要额外拉取
+    #   - name: Checkout deploy repo
+    #     uses: actions/checkout@v4
+    #     with:
+    #       repository: ${{ env.DEPLOY_REPO }}
+    #       ref: ${{ env.DEPLOY_BRANCH }}
+    #       path: .deploy_git # 指定存放到push_blog同级目录下
 
     # 安装node.js, 配置node环境
       - name: Use Node.js ${{ matrix.node_version }}
@@ -78,7 +78,7 @@ jobs:
         with:
           # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
           switches: -avzh --delete
-          path: ./.deploy_git
+          path: .deploy_git
           remote_path: /var/www/myblog
           remote_host: 121.36.61.23
           remote_port: 22
