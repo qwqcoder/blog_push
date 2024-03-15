@@ -5,10 +5,10 @@ on:
     branches:
       - master
 
-env:
+env:d
   GIT_USER: qwqcoder
   GIT_EMAIL: 1958448979@qq.com
-  THEME_REPO: qwqcocer/blog_theme
+  THEME_REPO: qwqcoder/blog_theme
   THEME_BRANCH: master
   DEPLOY_REPO: qwqcoder/qwqcoder.github.io
   DEPLOY_BRANCH: master
