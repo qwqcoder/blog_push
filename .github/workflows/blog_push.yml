@@ -36,14 +36,6 @@ jobs:
           ref: ${{ env.THEME_BRANCH }}
           path: themes/hexo-theme-butterfly # 这里指定了拉取之后存放的路径
 
-    # # 同样的hexo-deploy工具也是一个独立的repo仓库, 需要额外拉取
-    #   - name: Checkout deploy repo
-    #     uses: actions/checkout@v4
-    #     with:
-    #       repository: ${{ env.DEPLOY_REPO }}
-    #       ref: ${{ env.DEPLOY_BRANCH }}
-    #       path: .deploy_git # 指定存放到push_blog同级目录下
-
     # 安装node.js, 配置node环境
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v4
@@ -58,7 +50,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          # ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-keyscan 121.36.61.23 >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL

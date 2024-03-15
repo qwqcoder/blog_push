@@ -1,9 +1,6 @@
 ---
 title: hexo远端部署
-tags:
-	-hexo
-	-nginx
-	-git
+tags:[hexo, nginx, git]
 ---
 
 
@@ -16,7 +13,7 @@ tags:
 
 ## 步骤
 
-1. 进入 `test` 执行 `hexo init`
+1. 进入 `test` 执行 `hexo init`
 
    不出意外的话, `test` 路径下会出现以下内容
 
@@ -89,11 +86,9 @@ deploy:
 
 # 同步远端仓库
 
-## 同步至 github
-
 1. 修改 `.config.yml` 配置
 
-   + 需要在 **github** 上创建名为 `test.github.io`, 这是专门用来推送 `hexo g` 生成的静态网页
+   + 需要在 **github** 上创建名为 `test.github.io`, 这是专门用来推送 `hexo g` 生成的静态网页
 
    ```yml
    deploy:
@@ -128,8 +123,8 @@ deploy:
      
      env: 
        GIT_USER: qwqcoder
-       GIT_EMAIL: 1958448979@qq.com 
-       THEME_REPO: qwqcoder/blog_theme # 主题是一个单独的 git 项目路径, 单独拉取
+       GIT_EMAIL: 1958448979@qq.com
+       THEME_REPO: qwqcoder/blog_theme # blog_theme 是我用来专门存放主题项目的仓库
        THEME_BRANCH: master
        DEPLOY_REPO: qwqcoder/test.github.io
        DEPLOY_BRANCH: master
@@ -148,22 +143,14 @@ deploy:
            - name: Checkout
              uses: actions/checkout@v4
      
-         # 因为hexo使用的theme主题是一个单独的git仓库项目, 给test_push仓库push更新时会忽略其中嵌套的repo仓库
-         # 所以事实上test_push.git中是没有theme相关文件的, 需要额外的拉取, 同理放入容器的工作目录下
+         # 因为hexo使用的theme主题是一个单独的git仓库项目, 给blog_push仓库push更新时会忽略其中嵌套的repo仓库
+         # 所以事实上blog_push.git中是没有theme相关文件的, 需要额外的拉取, 同理放入容器的工作目录下
            - name: Checkout theme repo
              uses: actions/checkout@v4
              with:
                repository: ${{ env.THEME_REPO }}
                ref: ${{ env.THEME_BRANCH }}
                path: themes/hexo-theme-butterfly # 这里指定了拉取之后存放的路径
-     
-         # 同样的hexo-deploy工具也是一个独立的repo仓库, 需要额外拉取
-           - name: Checkout deploy repo
-             uses: actions/checkout@v4
-             with:
-               repository: ${{ env.DEPLOY_REPO }}
-               ref: ${{ env.DEPLOY_BRANCH }}
-               path: .deploy_git # 指定存放到push_blog同级目录下
      
          # 安装node.js, 配置node环境
            - name: Use Node.js ${{ matrix.node_version }}
@@ -179,6 +166,7 @@ deploy:
                mkdir -p ~/.ssh/
                echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
                chmod 600 ~/.ssh/id_rsa
+               # 添加
                ssh-keyscan github.com >> ~/.ssh/known_hosts
                ssh-keyscan 121.36.61.23 >> ~/.ssh/known_hosts
                git config --global user.name $GIT_USER
@@ -191,7 +179,21 @@ deploy:
      
            - name: Deploy hexo
              run: |
+               npm run build
                npm run deploy
+     
+           # 推送到远端服务器
+           - name: rsync deployments
+             uses: burnett01/rsync-deployments@4.1
+             with:
+               # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
+               switches: -avzh --delete
+               path: public/
+               remote_path: /var/www/myblog
+               remote_host: 121.36.61.23
+               remote_port: 22
+               remote_user: root
+               remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
      ```
 
      这段代码是一个 GitHub Actions 工作流程，主要用于配置环境并设置相关参数，包括：
@@ -213,6 +215,13 @@ deploy:
         - `ssh-keyscan github.com >> ~/.ssh/known_hosts` 和 `ssh-keyscan 121.36.61.23 >> ~/.ssh/known_hosts` 用于将远程主机的公钥添加到 `~/.ssh/known_hosts` 文件中，以避免 SSH 连接时的警告或确认提示。
         - `git config --global user.name $GIT_USER` 和 `git config --global user.email $GIT_EMAIL` 用于设置全局 Git 用户名和邮箱。
 
+     4. **注意事项**
 
-## 同步至私人服务器
+        + 确保在服务器上生成一个密钥对, 将**公钥**添加到 `~/.ssh/authorized-keys` 文件中, **私钥**添加到 `test\test_push.git` 仓库的 `secret` 变量中, 这里将**私钥**命名为 `SSH_PRIVATE_KEY`
+
+          ![image-20240316004003064](../img/hexo%E8%BF%9C%E7%AB%AF%E9%83%A8%E7%BD%B2.assets/image-20240316004003064.png)
+
+          
+
+
 
