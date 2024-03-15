@@ -1,6 +1,6 @@
 ---
 title: hexo远端部署
-tags:[hexo, nginx, git]
+tags:['hexo', 'nginx', 'git']
 ---
 
 
