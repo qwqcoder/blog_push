@@ -79,7 +79,7 @@ jobs:
         with:
           # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
           switches: -avzh
-          path: public
+          path: public/
           remote_path: /var/www/myblog
           remote_host: 121.36.61.23
           remote_port: 22
