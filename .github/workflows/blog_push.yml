@@ -8,7 +8,7 @@ on:
 env:
   GIT_USER: qwqcoder
   GIT_EMAIL: 1958448979@qq.com
-  THEME_REPO: jerryc127/hexo-theme-butterfly
+  THEME_REPO: qwqcoder/blog_push
   THEME_BRANCH: master
 
 jobs:
