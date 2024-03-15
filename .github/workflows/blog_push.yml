@@ -6,7 +6,7 @@ on:
     branches:
       - master
 
-# 任务 
+# 任务  
 jobs:
   build-and-deploy:
     # 服务器环境：最新版 Ubuntu
