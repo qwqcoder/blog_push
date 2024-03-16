@@ -168,7 +168,7 @@ deploy:
                mkdir -p ~/.ssh/
                echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
                chmod 600 ~/.ssh/id_rsa
-               # 添加
+               # 避免访问github出现问题, 添加到known_hosts
                ssh-keyscan github.com >> ~/.ssh/known_hosts
                ssh-keyscan 121.36.61.23 >> ~/.ssh/known_hosts
                git config --global user.name $GIT_USER
@@ -190,7 +190,7 @@ deploy:
              with:
                # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
                switches: -avzh --delete
-               path: public/  # action容器工作目录内的路径地址
+               path: .deploy_git/  # action容器工作目录内的路径地址
                remote_path: /var/www/myblog # 远端服务器的路径地址
                remote_host: 121.36.61.23 # 服务器 ip
                remote_port: 22
@@ -219,7 +219,7 @@ deploy:
 
      4. **注意事项**
 
-        + 确保在服务器上生成一个密钥对, 将**公钥**添加到 `github SSH` 文件中, **私钥**添加到 `test\test_push.git` 仓库的 `secret` 变量中, 这里将**私钥**命名为 `SSH_PRIVATE_KEY`
+        + 确保在服务器上生成一个密钥对, 将**公钥**添加到 `github SSH` 文件中, **私钥**添加到 `test\test_push.git` 仓库的 `secret` 变量中, 这里将**私钥**命名为 `SSH_PRIVATE_KEY`
 
           ![image-20240316004003064](../img/hexo%E8%BF%9C%E7%AB%AF%E9%83%A8%E7%BD%B2.assets/image-20240316004003064.png)
 
