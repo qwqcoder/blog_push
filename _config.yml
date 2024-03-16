@@ -84,7 +84,6 @@ search:
   field: post
   content: true
   format: html
-  limit: 10000
 
 # menu:
 #   首頁: / || fas fa-home
