@@ -51,10 +51,10 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img: /img/centaur.jpg
+index_img: /img/cover/wyy2.png
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: /img/default_top_img.jpg
+default_top_img: /img/cover/wyy2.png
 
 # The banner image of archive page
 archive_img:
