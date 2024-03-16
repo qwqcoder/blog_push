@@ -29,7 +29,12 @@ abbrlink: ab21860c
   ```yaml
   title: blog-name
   date: 创建时间
-  tags: 标签
+  tags: 
+  	- tag1
+  	- tag2 # 一定注意空格
+  description: description
+  cover: 封面地址
+  top_img: 个性化顶部图
   ```
 
 + 方法二: 也可以手动创建 `.md` 文件
@@ -50,7 +55,7 @@ abbrlink: ab21860c
 
   
 
-# 关于博客链接的注意事项
+# 优化博客链接配置
 
 `Hexo` 文章链接默认的生成规则是：`:year/:month/:day/:title`，是按照年、月、日、标题来生成的。
 
@@ -71,4 +76,45 @@ abbrlink: ab21860c
   permalink: :year/:month/:day/:abbrlink.html
   ```
 
-+ 
+
+
+
+# 个性化blog图片
+
++ 修改主题路径下的 `_config.yml` 配置文件
+
+```yml
+cover:
+  # display the cover or not (是否顯示文章封面)
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  # the position of cover in home page (封面顯示的位置)
+  # left/right/both
+  position: right
+  # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
+  default_cover:
+    # - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg
+```
+
+| 参数            | 解释                                                         |
+| --------------- | ------------------------------------------------------------ |
+| index_enable    | 主页是否显示文章封面                                         |
+| aside_enable    | 侧栏是否显示                                                 |
+| archives_enable | 归档页面是否显示文章封面                                     |
+| position        | 主页卡片文章封面显示位置<br />- left：全部显示左边<br />- right：全部显示右边<br />- both：左右交替 |
+| default_cover   | 默认的图片配置                                               |
+
+```yml	
+default_cover:
+  - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png
+  - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png
+  - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png
+```
+
+
+
+# 待办
+
++ 检索功能
++ 评论功能
