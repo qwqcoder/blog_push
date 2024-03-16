@@ -1,6 +1,9 @@
 ---
 title: hexo远端部署
-tags:[hexo, nginx, git]
+tags:
+  - hexo
+  - nginx
+  - git
 ---
 
 # 创建hexo项目
