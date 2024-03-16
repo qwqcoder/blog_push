@@ -62,6 +62,8 @@ jobs:
  
       - name: Deploy hexo
         run: |
+          npm run clean
+          npm run build
           npm run deploy
 
       # 推送到远端服务器
