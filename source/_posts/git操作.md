@@ -1,6 +1,7 @@
 ---
 title: git操作
 tags: git
+layout: post
 ---
 
 

@@ -1,6 +1,7 @@
 ---
 tags: hexo
 title: hexo
+layout: post
 ---
 
 

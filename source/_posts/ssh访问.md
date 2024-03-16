@@ -1,6 +1,9 @@
 ---
 title: ssh访问
-tags: [ssh, rsa加密]
+tags: 
+	-ssh
+	-rsa加密
+layout: post
 ---
 
 # ssh连接过程

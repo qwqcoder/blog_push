@@ -4,6 +4,7 @@ tags:
   - hexo
   - nginx
   - git
+layout: post
 ---
 
 # 创建hexo项目
@@ -189,12 +190,12 @@ deploy:
              with:
                # 这里是 rsync 的参数 switches: -avzh --delete --exclude="" --include="" --filter=""
                switches: -avzh --delete
-               path: public/
-               remote_path: /var/www/myblog
-               remote_host: 121.36.61.23
+               path: public/  # action容器工作目录内的路径地址
+               remote_path: /var/www/myblog # 远端服务器的路径地址
+               remote_host: 121.36.61.23 # 服务器 ip
                remote_port: 22
                remote_user: root
-               remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+               remote_key: ${{ secrets.SSH_PRIVATE_KEY }} # 一定配置密钥登录
      ```
 
      这段代码是一个 GitHub Actions 工作流程，主要用于配置环境并设置相关参数，包括：
@@ -218,11 +219,11 @@ deploy:
 
      4. **注意事项**
 
-        + 确保在服务器上生成一个密钥对, 将**公钥**添加到 `~/.ssh/authorized-keys` 文件中, **私钥**添加到 `test\test_push.git` 仓库的 `secret` 变量中, 这里将**私钥**命名为 `SSH_PRIVATE_KEY`
+        + 确保在服务器上生成一个密钥对, 将**公钥**添加到 `github SSH` 文件中, **私钥**添加到 `test\test_push.git` 仓库的 `secret` 变量中, 这里将**私钥**命名为 `SSH_PRIVATE_KEY`
 
           ![image-20240316004003064](../img/hexo%E8%BF%9C%E7%AB%AF%E9%83%A8%E7%BD%B2.assets/image-20240316004003064.png)
 
-          
+          ![image-20240316092137214](../img/hexo%E8%BF%9C%E7%AB%AF%E9%83%A8%E7%BD%B2.assets/image-20240316092137214.png)
 
 
 
