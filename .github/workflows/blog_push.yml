@@ -54,7 +54,7 @@ jobs:
           ssh-keyscan 121.36.61.23 >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
-          # cp _config.butterfly.yml themes/hexo-theme-butterfly/_config.yml
+          cp _config.butterfly.yml themes/hexo-theme-butterfly/_config.yml
 
       - name: Install dependencies
         run: |
