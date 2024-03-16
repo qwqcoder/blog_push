@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>git操作</title>
+    <url>/2024/03/15/46390b34.html</url>
+    <content><![CDATA[<ul>
+<li><p><code>git branch -f master HEAD~3</code></p>
+<p>强制使得 <code>master</code> 分支指向 <code>HEAD</code> 向上追溯 $3$ 次的位置</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssh访问</title>
+    <url>/2024/03/16/6cede086.html</url>
+    <content><![CDATA[<h1 id="ssh连接过程"><a href="#ssh连接过程" class="headerlink" title="ssh连接过程"></a>ssh连接过程</h1><h2 id="密钥类型"><a href="#密钥类型" class="headerlink" title="密钥类型"></a>密钥类型</h2><p><img src="/../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001710619.png" alt="image-20240316001710619"></p>
+<p><img src="/../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001727647.png" alt="image-20240316001727647"></p>
+<h2 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h2><p><code>SSH(Secure Shell)</code>是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：</p>
+<ol>
+<li><p><strong>客户端发起连接请求：</strong> 用户在本地计算机上的 <code>SSH</code> 客户端（比如 <code>OpenSSH</code> 或 <code>PuTTY</code>）输入远程服务器的地址和用户名，并发起连接请求。</p>
+</li>
+<li><p><strong>服务器端响应：</strong> 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。</p>
+</li>
+<li><p><strong>密钥交换：</strong> 客户端和服务器之间进行密钥交换，确保数据传输的安全性。这个过程通常包括以下步骤：</p>
+<ul>
+<li>客户端向服务器发送一个连接请求，并发送自己支持的加密算法列表。</li>
+<li>服务器从接收到的加密算法列表中选择一个加密算法，并发送自己的公钥给客户端。</li>
+<li>客户端使用服务器的公钥对一个随机生成的**会话密钥(对称密钥)**进行加密，并将加密后的会话密钥发送给服务器。</li>
+<li>服务器使用自己的私钥解密客户端发送的会话密钥。</li>
+</ul>
+</li>
+<li><p><strong>认证：</strong> 客户端将用户凭据（如密码或 SSH 密钥）发送给服务器进行身份认证。如果凭据验证成功，客户端将被授权访问服务器。</p>
+</li>
+<li><p><strong>会话建立：</strong> 认证成功后，客户端和服务器建立起安全的通信会话，可以在该会话中安全地传输数据。</p>
+</li>
+<li><p><strong>数据传输：</strong> 客户端和服务器之间可以安全地传输数据，包括登录命令、文件传输、远程执行命令等操作。</p>
+</li>
+<li><p><strong>连接关闭：</strong> 当用户退出登录或连接超时时，连接被关闭，SSH 会话结束。</p>
+</li>
+</ol>
+<p>总的来说，SSH 连接的流程涉及到密钥交换、身份认证和安全通信会话建立等步骤，确保了数据传输的安全性和可靠性。</p>
+<h1 id="区分authorized-keys与known-hosts文件"><a href="#区分authorized-keys与known-hosts文件" class="headerlink" title="区分authorized_keys与known_hosts文件"></a>区分authorized_keys与known_hosts文件</h1><p><code>authorized_keys</code> 和 <code>known_hosts</code> 都是与 SSH 密钥认证相关的文件，但它们在功能和用途上有所不同：</p>
+<ol>
+<li><p><strong>authorized_keys：</strong></p>
+<ul>
+<li>位置：<code>authorized_keys</code> 文件位于服务器上的用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/authorized_keys</code>）。</li>
+<li>用途：<code>authorized_keys</code> 文件用于存储用户的公钥，以便服务器可以使用这些公钥来验证用户的身份。当用户尝试通过 SSH 连接到服务器时，服务器会检查该用户的 <code>authorized_keys</code> 文件，以确定是否允许连接。如果用户的公钥在 <code>authorized_keys</code> 文件中被发现，则服务器会允许用户连接，并使用相应的私钥进行身份验证。</li>
+</ul>
+</li>
+<li><p><strong>known_hosts：</strong></p>
+<ul>
+<li>位置：<code>known_hosts</code> 文件位于用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/known_hosts</code>）。</li>
+<li>用途：<code>known_hosts</code> 文件用于存储用户访问过的远程主机的公钥信息。当用户首次连接到一个远程主机时，SSH 客户端会将该主机的公钥保存到自己的 <code>known_hosts</code> 文件中。随后，当用户再次连接到同一台主机时，SSH 客户端会使用 <code>known_hosts</code> 文件中存储的公钥来验证主机的身份，以确保连接的安全性。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>authorized_keys</code> 文件用于服务器端存储用户的公钥，用于用户的身份验证；而 <code>known_hosts</code> 文件用于客户端存储已知主机的公钥，用于验证远程主机的身份。这两个文件在 SSH 认证过程中扮演着不同的角色，但都是确保连接安全性的重要组成部分。</p>
+]]></content>
+      <tags>
+        <tag>ssh</tag>
+        <tag>rsa加密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>背包专题</title>
+    <url>/2024/03/15/4f2ce235.html</url>
+    <content><![CDATA[<h1 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h1><p>&#x3D;&#x3D;从后往前更新&#x3D;&#x3D;</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v[i]; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h1><p>&#x3D;&#x3D;从前往后更新&#x3D;&#x3D;</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h1><p>&#x3D;&#x3D;分别使用01和多重背包&#x3D;&#x3D;</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">50000</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[N];</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N], s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; v[i] &gt;&gt; w[i] &gt;&gt; s[i];</span><br><span class="line">        <span class="comment">//如果所有当前项的花费超过总的背包体积，约等于当前项无限多，完全背包处理</span></span><br><span class="line">        <span class="keyword">if</span> (s[i] * v[i] &gt;= m) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//二进制分解使用01背包处理</span></span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s[i];</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v[i]] + w[i] * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c)</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v[i]] + c * w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="混合背包"><a href="#混合背包" class="headerlink" title="混合背包"></a>混合背包</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> dp[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> q[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> hh = <span class="number">-1</span>, tt = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> v, w, s;</span><br><span class="line">        cin &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(s &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = m;j &gt;= v;j --)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = v;j &lt;= m;j ++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s;</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v] + w * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(c)</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v; j--)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v] + c * w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>blog-name</title>
+    <url>/2024/03/07/ab21860c.html</url>
+    <content><![CDATA[<h1 id="关于配置文件"><a href="#关于配置文件" class="headerlink" title="关于配置文件"></a>关于配置文件</h1><p>在 <code>hexo</code> 的根目录创建一个文件 <code>_config.butterfly.yml</code>，并把主题目录的 <code>_config.yml </code>内容复制到<code> _config.butterfly.yml</code> 中。( 注意: 复制的是主題的 <code>_config.yml</code> ，而不是 <code>hexo</code> 的 <code>_config.yml</code>)</p>
+<blockquote>
+<p><strong>注意</strong>： 不能把主題目录的 <code>_config.yml </code>删掉</p>
+</blockquote>
+<p>注意： 以后只需要在 <code>_config.butterfly.yml</code> 进行配置就行。<br>如果使用了 <code>_config.butterfly.yml</code>， 配置主题的 <code>_config.yml</code> 将不会有效果。</p>
+<p><code>Hexo</code>会自动合并主题中的 <code>_config.yml</code> 和 <code>_config.butterfly.yml</code> 里的配置，如果存在同名配置，会使用 <code>_config.butterfly.yml</code> 的配置，其优先度较高。</p>
+<h1 id="博客撰写步骤"><a href="#博客撰写步骤" class="headerlink" title="博客撰写步骤"></a>博客撰写步骤</h1><p><strong>第一步</strong>: 创建 <code>.md</code> 文件</p>
+<ul>
+<li><p>方法一: <code>cd</code> 进入 <code>hexo</code> 根目录, 在 <code>Git Bash Here</code> 中执行命令: <code>hexo new &#39;blog-name&#39;</code> , 此时 <code>hexo</code> 会在 <code>\source\_posts</code> 下生成名为 <code>blog-name</code> 的 <code>.md</code> 文件, 用这个命令可以自动生成文件, 其中包含默认内容如下:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">blog-name</span></span><br><span class="line"><span class="attr">date:</span> <span class="string">创建时间</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag1</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag2</span> <span class="comment"># 一定注意空格</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">description</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">封面地址</span></span><br><span class="line"><span class="attr">top_img:</span> <span class="string">个性化顶部图</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法二: 也可以手动创建 <code>.md</code> 文件</p>
+</li>
+</ul>
+<p><strong>第二步</strong>: 编写 <code>md</code> 文档内容并保存</p>
+<ul>
+<li>使用 <code>markdown</code> 语法, 撰写博客内容即可</li>
+</ul>
+<p><strong>第三步</strong>: 清理然后生成, 然后推送到远端仓库</p>
+<ul>
+<li><p><code>hexo</code> 根目录下进入 <code>bash</code> 终端, 依次输入以下命令:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="优化博客链接配置"><a href="#优化博客链接配置" class="headerlink" title="优化博客链接配置"></a>优化博客链接配置</h1><p><code>Hexo</code> 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
+<p>这样一来, 当我们修改了文章的日期或者标题, 链接很可能就失效了, 特别是文章标题包含中文时, 被转译为 URL 编码后, 链接就特别长😣😣😣</p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li><p>安装插件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 <code>_config.yml</code> 配置文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:abbrlink.html</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="个性化blog图片"><a href="#个性化blog图片" class="headerlink" title="个性化blog图片"></a>个性化blog图片</h1><ul>
+<li>修改主题路径下的 <code>_config.yml</code> 配置文件</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">cover:</span></span><br><span class="line">  <span class="comment"># display the cover or not (是否顯示文章封面)</span></span><br><span class="line">  <span class="attr">index_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">aside_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">archives_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># the position of cover in home page (封面顯示的位置)</span></span><br><span class="line">  <span class="comment"># left/right/both</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">  <span class="comment"># When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)</span></span><br><span class="line">  <span class="attr">default_cover:</span></span><br><span class="line">    <span class="comment"># - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>index_enable</td>
+<td>主页是否显示文章封面</td>
+</tr>
+<tr>
+<td>aside_enable</td>
+<td>侧栏是否显示</td>
+</tr>
+<tr>
+<td>archives_enable</td>
+<td>归档页面是否显示文章封面</td>
+</tr>
+<tr>
+<td>position</td>
+<td>主页卡片文章封面显示位置<br />- left：全部显示左边<br />- right：全部显示右边<br />- both：左右交替</td>
+</tr>
+<tr>
+<td>default_cover</td>
+<td>默认的图片配置</td>
+</tr>
+</tbody></table>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">default_cover:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h1><ul>
+<li>检索功能</li>
+<li>评论功能</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>tag1</tag>
+        <tag>tag2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo远端部署</title>
+    <url>/2024/03/15/f1705634.html</url>
+    <content><![CDATA[<h1 id="创建hexo项目"><a href="#创建hexo项目" class="headerlink" title="创建hexo项目"></a>创建hexo项目</h1><p><img src="https://s2.loli.net/2024/03/16/ZcelUIzSBPvW4XO.png" alt="image-20240315212549119"></p>
+<p><code>test</code> 就是准备好用来初始化 <code>hexo</code> 项目的根目录</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>进入 <code>test</code> 执行 <code>hexo init</code> </p>
+<p>不出意外的话, <code>test</code> 路径下会出现以下内容</p>
+</li>
+</ol>
+<p><img src="https://s2.loli.net/2024/03/16/tFHRKZfAL4nEhxb.png" alt="image-20240315213900716"></p>
+<p>​		这就是一个初始的 <strong>hexo</strong> 项目了</p>
+<ol start="2">
+<li><p>进入 <code>test</code> 执行 <code>git init</code></p>
+<p>将 <code>test</code> 路径初始化为一个 <code>git</code> 项目, 目的是方便后续的远端同步</p>
+</li>
+</ol>
+<h1 id="安装theme"><a href="#安装theme" class="headerlink" title="安装theme"></a>安装theme</h1><p><a href="https://butterfly.js.org/posts/21cfbf15/">关于 <code>butterfly</code> 主题的官方安装教程</a></p>
+<p>进入 <code>test\themes</code> 路径下执行 <code>git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git</code></p>
+<blockquote>
+<p> 此时会将主题项目从 github 上克隆下来</p>
+</blockquote>
+<p>成功后, <code>test\themes</code> 内容如下</p>
+<p><img src="https://s2.loli.net/2024/03/16/UxJQ9es7KWZ4bFI.png" alt="image-20240315214900875"></p>
+<p>关于如何个性化配置主题, 这里不做记录</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li><code>test</code> 根目录下, <code>.config.yml</code> 中 <code>themes</code> 参数需要配置为 <code>test\themes</code> 路径下, 你的主题所在的文件名这里就是 <code>hexo-theme-butterfly</code></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/03/16/cwaXDnPtFezoxEr.png" alt="image-20240315214958424"></p>
+<ul>
+<li><code>butterfly</code> 需要单独的解析 <code>.pug</code> 的插件, 在 <code>test</code> 下执行 <code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
+</ul>
+<h1 id="配置deploy插件"><a href="#配置deploy插件" class="headerlink" title="配置deploy插件"></a>配置deploy插件</h1><p><a href="https://hexo.io/zh-cn/docs/one-command-deployment.html">hexo-deployer-git  官方教程</a></p>
+<p>回到 <code>test</code> 根目录, 进入 <code>git bash</code> 执行 <code>npm install hexo-deployer-git --save</code></p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>安装 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <code>.config.yml</code> 配置</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span> <span class="comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  <span class="attr">branch:</span> [<span class="string">branch</span>]</span><br><span class="line">  <span class="attr">message:</span> [<span class="string">message</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>repo</code></td>
+<td align="left">库（Repository）地址</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>branch</code></td>
+<td align="left">分支名称</td>
+<td align="left"><code>gh-pages</code> (GitHub) <code>coding-pages</code> (Coding.net) <code>master</code> (others)</td>
+</tr>
+<tr>
+<td align="left"><code>message</code></td>
+<td align="left">自定义提交信息</td>
+<td align="left"><code>Site updated: &#123;&#123; now('YYYY-MM-DD HH:mm:ss') &#125;&#125;</code>)</td>
+</tr>
+<tr>
+<td align="left"><code>token</code></td>
+<td align="left">可选的令牌值，用于认证 repo。用 <code>$</code> 作为前缀从而从环境变量中读取令牌</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h1 id="同步远端仓库"><a href="#同步远端仓库" class="headerlink" title="同步远端仓库"></a>同步远端仓库</h1><ol>
+<li><p>修改 <code>.config.yml</code> 配置</p>
+<ul>
+<li>需要在 <strong>github</strong> 上创建名为 <code>test.github.io</code>, 这是专门用来推送 <code>hexo g</code> 生成的静态网页</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:qwqcoder/test.github.io.git</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个 <strong>git</strong> 仓库 <code>test_push.git</code>, 用于推送整个 <code>hexo</code> 项目(也就是 <code>test</code> 路径的所有内容)</p>
+<p><strong>步骤</strong>:</p>
+<ul>
+<li><code>git add .</code></li>
+<li><code>git add remote test https://github.com/qwqcoder/test_push.git</code></li>
+<li><code>git push -u test master</code></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/03/16/NJl9xBYPC3G6ph4.png" alt="image-20240315221448604"></p>
+</li>
+<li><p><strong>action</strong> 自动话部署</p>
+<ul>
+<li>给 <code>test_push.git</code> 添加一个工作流配置文件</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a href="https://sanonz.github.io/2020/deploy-a-hexo-blog-from-github-actions/">参考教程</a></li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">env:</span> </span><br><span class="line">  <span class="attr">GIT_USER:</span> <span class="string">qwqcoder</span></span><br><span class="line">  <span class="attr">GIT_EMAIL:</span> <span class="number">1958448979</span><span class="string">@qq.com</span></span><br><span class="line">  <span class="attr">THEME_REPO:</span> <span class="string">qwqcoder/blog_theme</span> <span class="comment"># blog_theme 是我用来专门存放主题项目的仓库</span></span><br><span class="line">  <span class="attr">THEME_BRANCH:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">DEPLOY_REPO:</span> <span class="string">qwqcoder/test.github.io</span></span><br><span class="line">  <span class="attr">DEPLOY_BRANCH:</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Build</span> <span class="string">on</span> <span class="string">node</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.node_version</span> <span class="string">&#125;&#125;</span> <span class="string">and</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.os</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">strategy:</span></span><br><span class="line">      <span class="attr">matrix:</span></span><br><span class="line">        <span class="attr">os:</span> [<span class="string">ubuntu-latest</span>]</span><br><span class="line">        <span class="attr">node_version:</span> [<span class="number">16.</span><span class="string">x</span>]</span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="comment"># 将当前所在repository拉取到github的虚拟机容器工作目录下</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 因为hexo使用的theme主题是一个单独的git仓库项目, 给blog_push仓库push更新时会忽略其中嵌套的repo仓库</span></span><br><span class="line">    <span class="comment"># 所以事实上blog_push.git中是没有theme相关文件的, 需要额外的拉取, 同理放入容器的工作目录下</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">theme</span> <span class="string">repo</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">repository:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.THEME_REPO</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">ref:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.THEME_BRANCH</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">themes/hexo-theme-butterfly</span> <span class="comment"># 这里指定了拉取之后存放的路径</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 安装node.js, 配置node环境</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Use</span> <span class="string">Node.js</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.node_version</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.node_version</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Configuration</span> <span class="string">environment</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">HEXO_DEPLOY_PRI:</span> <span class="string">$&#123;&#123;secrets.HEXO_DEPLOY_PRI&#125;&#125;</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          sudo timedatectl set-timezone &quot;Asia/Shanghai&quot;</span></span><br><span class="line"><span class="string">          mkdir -p ~/.ssh/</span></span><br><span class="line"><span class="string">          echo &quot;$HEXO_DEPLOY_PRI&quot; &gt; ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">          chmod 600 ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">          # 避免访问github出现问题, 添加到known_hosts</span></span><br><span class="line"><span class="string">          ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">          ssh-keyscan 121.36.61.23 &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">          git config --global user.name $GIT_USER</span></span><br><span class="line"><span class="string">          git config --global user.email $GIT_EMAIL</span></span><br><span class="line"><span class="string">          # cp _config.butterfly.yml themes/hexo-theme-butterfly/_config.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">hexo</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm run build</span></span><br><span class="line"><span class="string">          npm run deploy</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="comment"># 推送到远端服务器</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">rsync</span> <span class="string">deployments</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">burnett01/rsync-deployments@4.1</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="comment"># 这里是 rsync 的参数 switches: -avzh --delete --exclude=&quot;&quot; --include=&quot;&quot; --filter=&quot;&quot;</span></span><br><span class="line">          <span class="attr">switches:</span> <span class="string">-avzh</span> <span class="string">--delete</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.deploy_git/</span>  <span class="comment"># action容器工作目录内的路径地址</span></span><br><span class="line">          <span class="attr">remote_path:</span> <span class="string">/var/www/myblog</span> <span class="comment"># 远端服务器的路径地址</span></span><br><span class="line">          <span class="attr">remote_host:</span> <span class="number">121.36</span><span class="number">.61</span><span class="number">.23</span> <span class="comment"># 服务器 ip</span></span><br><span class="line">          <span class="attr">remote_port:</span> <span class="number">22</span></span><br><span class="line">          <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">          <span class="attr">remote_key:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SSH_PRIVATE_KEY</span> <span class="string">&#125;&#125;</span> <span class="comment"># 一定配置密钥登录</span></span><br></pre></td></tr></table></figure>
+
+<p>这段代码是一个 GitHub Actions 工作流程，主要用于配置环境并设置相关参数，包括：</p>
+<ul>
+<li><p><strong>使用 Node.js 版本：</strong></p>
+<ul>
+<li>使用 <code>actions/setup-node</code> 动作来设置 Node.js 环境。</li>
+<li><code>$&#123;&#123; matrix.node_version &#125;&#125;</code> 是一个矩阵构建中定义的变量，用于指定要使用的 Node.js 版本。</li>
+</ul>
+</li>
+<li><p><strong>配置环境变量：</strong></p>
+<ul>
+<li>使用 <code>env</code> 关键字设置环境变量。</li>
+<li><code>HEXO_DEPLOY_PRI</code> 是一个环境变量，其值来自 GitHub Secrets 中的 <code>HEXO_DEPLOY_PRI</code> 密钥。</li>
+</ul>
+</li>
+<li><p><strong>运行命令：</strong></p>
+<ul>
+<li>使用 <code>run</code> 关键字执行一系列命令。</li>
+<li><code>sudo timedatectl set-timezone &quot;Asia/Shanghai&quot;</code> 设置系统时区为亚洲&#x2F;上海时区。</li>
+<li><code>mkdir -p ~/.ssh/</code> 创建 SSH 目录，用于存放 SSH 密钥和相关文件。</li>
+<li><code>echo &quot;$HEXO_DEPLOY_PRI&quot; &gt; ~/.ssh/id_rsa</code> 将名为 <code>HEXO_DEPLOY_PRI</code> 的密钥内容写入 <code>~/.ssh/id_rsa</code> 文件中。</li>
+<li><code>chmod 600 ~/.ssh/id_rsa</code> 修改 <code>~/.ssh/id_rsa</code> 文件的权限，确保只有当前用户可以读写该文件。</li>
+<li><code>ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts</code> 和 <code>ssh-keyscan 121.36.61.23 &gt;&gt; ~/.ssh/known_hosts</code> 用于将远程主机的公钥添加到 <code>~/.ssh/known_hosts</code> 文件中，以避免 SSH 连接时的警告或确认提示。</li>
+<li><code>git config --global user.name $GIT_USER</code> 和 <code>git config --global user.email $GIT_EMAIL</code> 用于设置全局 Git 用户名和邮箱。</li>
+</ul>
+</li>
+<li><p><strong>注意事项</strong></p>
+<ul>
+<li><p>确保在服务器上生成一个密钥对, 将<strong>公钥</strong>添加到 <code>github SSH</code> 文件中, <strong>私钥</strong>添加到 <code>test\test_push.git</code> 仓库的 <code>secret</code> 变量中, 这里将<strong>私钥</strong>命名为 <code>SSH_PRIVATE_KEY</code></p>
+<p><img src="https://s2.loli.net/2024/03/16/mQD6MLj2Bpw8iPK.png" alt="image-20240316004003064"></p>
+<p><img src="https://s2.loli.net/2024/03/16/AjdU4yEZopSkvIc.png" alt="image-20240316092137214"></p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>git</tag>
+        <tag>hexo</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>c++ 语法学习</title>
+    <url>/2024/03/16/ac3a716d.html</url>
+    <content><![CDATA[<h1 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h1><h2 id="一般重载"><a href="#一般重载" class="headerlink" title="一般重载"></a>一般重载</h2><p>在C++中可以通过<strong>重载</strong>运算符来改变已有运算符的行为，使其适用于自定义类型。以下是一个简单的例子，演示如何重载加法运算符（+）来实现两个自定义对象的相加：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyNumber</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyNumber</span>(<span class="type">int</span> n) : <span class="built_in">num</span>(n) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重载加法运算符</span></span><br><span class="line">    MyNumber <span class="keyword">operator</span>+(<span class="type">const</span> MyNumber&amp; other) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">MyNumber</span>(<span class="keyword">this</span>-&gt;num + other.num);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数字的方法</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getNum</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">MyNumber <span class="title">num1</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    <span class="function">MyNumber <span class="title">num2</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用重载的加法运算符</span></span><br><span class="line">    MyNumber sum = num1 + num2;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; sum.<span class="built_in">getNum</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>MyNumber</code> 类重载了加法运算符 <code>+</code>。在 <code>main()</code> 函数中，我们创建了两个 <code>MyNumber</code> 对象 <code>num1</code> 和 <code>num2</code>，然后使用重载的加法运算符将它们相加，并将结果赋给 <code>sum</code>。最后，我们打印出 <code>sum</code> 对象中存储的值。</p>
+<p>减法运算符 <code>-</code>、乘法运算符 <code>*</code> 等类似，<strong>自增运算符比较特殊</strong>。重载运算符时需要考虑类型的合理性和操作的语义，以确保代码的可读性和正确性。</p>
+<h2 id="自增运算符"><a href="#自增运算符" class="headerlink" title="自增运算符"></a>自增运算符</h2><p>C++ 中的自增运算符 <code>++</code> 的重载有一些特殊之处。在 C++ 中，自增运算符可以以前缀形式（<code>++var</code>）或后缀形式（<code>var++</code>）使用，并且可以重载这两种形式。</p>
+<blockquote>
+<p>重载前缀形式的自增运算符时，通常返回递增后的对象的引用（或指针）。而重载后缀形式时，则要返回递增前的对象的副本，通常通过一个额外的参数来区分前缀和后缀形式的调用。</p>
+</blockquote>
+<p>以下是一个简单的示例，演示了如何重载前缀和后缀形式的自增运算符：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyNumber</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyNumber</span>(<span class="type">int</span> n) : <span class="built_in">num</span>(n) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重载前缀形式的自增运算符</span></span><br><span class="line">    MyNumber&amp; <span class="keyword">operator</span>++() &#123;</span><br><span class="line">        ++num;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重载后缀形式的自增运算符</span></span><br><span class="line">    MyNumber <span class="keyword">operator</span>++(<span class="type">int</span>) &#123;</span><br><span class="line">        MyNumber temp = *<span class="keyword">this</span>;</span><br><span class="line">        ++num;</span><br><span class="line">        <span class="keyword">return</span> temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数字的方法</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getNum</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">MyNumber <span class="title">num</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用前缀形式的自增运算符</span></span><br><span class="line">    ++num;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;After prefix increment: &quot;</span> &lt;&lt; num.<span class="built_in">getNum</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用后缀形式的自增运算符</span></span><br><span class="line">    MyNumber num2 = num++;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;After postfix increment: &quot;</span> &lt;&lt; num2.<span class="built_in">getNum</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>MyNumber</code> 类重载了前缀和后缀形式的自增运算符 <code>++</code>。在 <code>main()</code> 函数中，我们分别使用了前缀和后缀形式的自增运算符，并打印了结果。</p>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><h2 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h2><p>初始化列表是一种用于在对象构造过程中初始化成员变量的特性。它<strong>提供了一种更加有效和灵活的初始化方式，特别是对于类中的成员变量或者继承关系中的基类构造函数。</strong></p>
+<blockquote>
+<p>在传统的构造函数中，成员变量的初始化通常是在构造函数的函数体中进行的。而使用初始化列表，则可以在构造函数的初始化列表中直接初始化成员变量，而不需要在构造函数的函数体中再次赋值。</p>
+</blockquote>
+<p>初始化列表的语法是在构造函数的参数列表后面使用冒号，并列出成员变量及其初始化值，以逗号分隔。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 使用初始化列表初始化成员变量</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> a, <span class="type">int</span> b) : <span class="built_in">x</span>(a), <span class="built_in">y</span>(b) &#123;</span><br><span class="line">        <span class="comment">// 构造函数的函数体</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，构造函数 <code>MyClass(int a, int b)</code> 使用了初始化列表来初始化成员变量 <code>x</code> 和 <code>y</code>。</p>
+<p><strong>优点</strong></p>
+<ol>
+<li><strong>效率更高：</strong> 使用初始化列表直接在对象构造时初始化成员变量，避免了先构造对象再赋值的过程，提高了效率。</li>
+<li><strong>const 成员变量和引用类型成员变量必须使用初始化列表：</strong> 在初始化列表中初始化 const 成员变量和引用类型成员变量是唯一可行的方式。</li>
+<li><strong>初始化顺序：</strong> 成员变量在初始化列表中的顺序决定了初始化的顺序，与它们在类中声明的顺序无关。这有助于避免一些潜在的问题。</li>
+</ol>
+<p>总之，C++ 的初始化列表是一种强大的特性，可以帮助你更优雅地初始化类的成员变量，并提高代码的效率和可读性。</p>
+<h2 id="拷贝构造"><a href="#拷贝构造" class="headerlink" title="拷贝构造"></a>拷贝构造</h2><h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p>当你没有显式地定义拷贝构造函数时，编译器会自动生成一个默认的拷贝构造函数。让我们通过一个简单的示例来演示这一点：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span>* ptr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val), <span class="built_in">ptr</span>(<span class="keyword">new</span> <span class="built_in">int</span>(val)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员函数，打印对象的值</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;x: &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, ptr: &quot;</span> &lt;&lt; *ptr &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个对象并打印其值</span></span><br><span class="line">    <span class="function">MyClass <span class="title">obj1</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    obj1.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过另一个对象初始化一个新对象，并打印其值</span></span><br><span class="line">    MyClass obj2 = obj1;</span><br><span class="line">    obj2.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例中，<code>MyClass</code> 类有两个成员变量：一个是整型 <code>x</code>，另一个是指向整型的指	针 <code>ptr</code>。在构造函数中，我们分别为 <code>x</code> 和 <code>ptr</code> 分配了内存。</p>
+<p>即使我们没有显式地定义拷贝构造函数，编译器会自动生成一个默认的拷贝构造函数，它会逐个成员地复制值。在这个示例中，<code>ptr</code> 成员是一个指针，编译器会复制指针的值，使得 <code>obj1</code> 和 <code>obj2</code> 的 <code>ptr</code> 指向相同的内存地址，&#x3D;&#x3D;这可能会导致浅拷贝问题。&#x3D;&#x3D;</p>
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><blockquote>
+<p>要解决浅拷贝问题，需要实现一个自定义的拷贝构造函数，以确保对象之间的深度拷贝。在拷贝构造函数中，你需要手动分配新的内存空间，并将原始对象的数据复制到新分配的内存中，而不是简单地复制指针。</p>
+</blockquote>
+<p>修改浅拷贝的示例，并添加一个自定义的拷贝构造函数来解决浅拷贝问题：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span>* ptr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val), <span class="built_in">ptr</span>(<span class="keyword">new</span> <span class="built_in">int</span>(val)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自定义拷贝构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; other) : <span class="built_in">x</span>(other.x), <span class="built_in">ptr</span>(<span class="keyword">new</span> <span class="built_in">int</span>(*other.ptr)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 析构函数</span></span><br><span class="line">    ~<span class="built_in">MyClass</span>() &#123;</span><br><span class="line">        <span class="keyword">delete</span> ptr; <span class="comment">// 释放指针指向的内存</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员函数，打印对象的值</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;x: &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, ptr: &quot;</span> &lt;&lt; *ptr &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个对象并打印其值</span></span><br><span class="line">    <span class="function">MyClass <span class="title">obj1</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    obj1.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过另一个对象初始化一个新对象，并打印其值</span></span><br><span class="line">    MyClass obj2 = obj1;</span><br><span class="line">    obj2.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，我们添加了一个自定义的拷贝构造函数 <code>MyClass(const MyClass&amp; other)</code>。在这个函数中，我们手动分配了新的内存空间，并将 <code>other</code> 对象的数据复制到新分配的内存中。这样做就确保了 <code>obj1</code> 和 <code>obj2</code> 的 <code>ptr</code> 指向的是不同的内存地址，从而避免了浅拷贝问题。</p>
+<p><strong>注意</strong></p>
+<p>在自定义拷贝构造函数中，我们进行了深度拷贝，复制了 <code>ptr</code> 指向的数据。并且在<strong>析构函数</strong>中，我们释放了 <code>ptr</code> 指向的内存。这样做可以确保资源的正确管理，避免内存泄漏。</p>
+]]></content>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>排序算法</title>
+    <url>/2024/03/17/735e5788.html</url>
+    <content><![CDATA[<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> a[N], tmp[N], n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span>* a, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    cnt = (cnt + <span class="built_in">merge</span>(a, l, mid)) % mod;;</span><br><span class="line">    cnt = (cnt + <span class="built_in">merge</span>(a, mid + <span class="number">1</span>, r)) % mod;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = l, j = mid + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &lt;= a[j]) tmp[k++] = a[i ++];</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            cnt = (cnt + mid - i + <span class="number">1</span>) % mod;</span><br><span class="line">            tmp[k++] = a[j ++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) tmp[k++] = a[i ++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) tmp[k++] = a[j ++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">        a[l + i] = tmp[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="built_in">merge</span>(a, <span class="number">1</span>, n);</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结论：逆序对的数量 $&#x3D;$ 使得数组升序时相邻数组元素的最小交换次数,</li>
+</ul>
+<p><strong>证明：</strong></p>
+<blockquote>
+<p>交换数组两个相邻的元素 <code>a[i]</code>, <code>a[i + 1]</code>, 若二者不相等, 那么对数组的逆序对数量的影响为 1, <code>a[i] &gt; a[i + 1]</code> 时逆序对数目减一, 又因为升序数组的逆序对数目为 0, 可知至少交换 k 次相邻元素可使得数组变成升序</p>
+<p>又因为数组不为升序时, 必定存在 <code>a[i] &gt; a[i + 1]</code>, 否则数组就是升序了🤪</p>
+<p>显然, 每次交换都可以找到一个位置存在 <code>a[i] &gt; a[i + 1]</code>, 从而逆序对数目减一, 所以结论成立</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+        <tag>merge sort</tag>
+      </tags>
+  </entry>
+</search>
