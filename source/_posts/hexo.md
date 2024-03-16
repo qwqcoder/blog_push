@@ -2,6 +2,7 @@
 tags: hexo
 title: hexo
 layout: post
+abbrlink: ab21860c
 ---
 
 

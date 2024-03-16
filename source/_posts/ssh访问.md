@@ -1,9 +1,10 @@
 ---
 title: ssh访问
-tags: 
+tags:
 	-ssh
 	-rsa加密
 layout: post
+abbrlink: 6cede086
 ---
 
 # ssh连接过程

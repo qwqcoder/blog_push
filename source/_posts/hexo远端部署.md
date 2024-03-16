@@ -5,6 +5,7 @@ tags:
   - nginx
   - git
 layout: post
+abbrlink: f1705634
 ---
 
 # 创建hexo项目

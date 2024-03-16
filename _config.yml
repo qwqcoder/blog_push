@@ -5,11 +5,16 @@
 # Site
 title: qwqcoder's Blog
 subtitle: qwq
-description: ''
-keywords:
+description: '所有你不够满意的现在, 都有一个不够努力的曾经~'
+keywords: 'qwqcoder'
 author: qwqcoder
 language: zh-CN
 timezone: ''
+
+nav:
+  log: /logo.png
+  display_title: true
+  fixed: false
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -79,6 +84,19 @@ search:
   field: post
   content: true
   format: html
+
+menu:
+  首頁: / || fas fa-home
+  時間軸: /archives/ || fas fa-archive
+  標籤: /tags/ || fas fa-tags
+  分類: /categories/ || fas fa-folder-open
+  清單||fa fa-heartbeat:
+    音樂: /music/ || fas fa-music
+    照片: /Gallery/ || fas fa-images
+    電影: /movies/ || fas fa-video
+  友鏈: /link/ || fas fa-link
+  關於: /about/ || fas fa-heart
+
 
 
 # Home page setting
