@@ -49,36 +49,25 @@ layout: post
 
   
 
-## 背景图片设置
+# 关于博客链接的注意事项
 
-+ 在 `themes\hexo-theme-matery\source\css\matery.css` 路径下,  找到 `body` 修改样式如下
+`Hexo` 文章链接默认的生成规则是：`:year/:month/:day/:title`，是按照年、月、日、标题来生成的。
 
-  ```css
-  body {
-      /* background-color: #eaeaea; */
-      background: linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)) 0% 0% / cover, url("https://ae01.alicdn.com/kf/H18a4b998752a4ae68b8e85d432a5aef0l.png"), url("https://ae01.alicdn.com/kf/H21b5f6b8496141a1979a33666e1074d9x.jpg") 0px 0px;
-      background-attachment: fixed;
-      margin: 0;
-      color: #7F95D1;
-  }
+这样一来, 当我们修改了文章的日期或者标题, 链接很可能就失效了, 特别是文章标题包含中文时, 被转译为 URL 编码后, 链接就特别长😣😣😣
+
+**解决方案**
+
++ 安装插件
+
+  ```bash
+  npm install hexo-abbrlink --save
   ```
 
-# 目录栏设置
++ 修改 `_config.yml` 配置文件
 
-+ 目录栏的样式位于 `themes\hexo-theme-matery\layout\_partial\post-detail-toc.ejs` , 修改如下:
-
-  ```css
-  .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-        background-color: rgb(255, 255, 255,0.7);
-        border-radius: 10px;
-        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
-    }
+  ```yml
+  # permalink: :year/:month/:day/:title/
+  permalink: :year/:month/:day/:abbrlink.html
   ```
 
-  
-
-# 待办
-
-- [ ] 友情链接
++ 
