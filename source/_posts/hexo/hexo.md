@@ -1,12 +1,10 @@
 ---
-title: blog-name
+title: hexo
 date: 
-tags: 
-	- tag1
-	- tag2 # 一定注意空格
-description: description
-cover: 封面地址
-top_img: 个性化顶部图
+tags: hexo
+description: 
+cover: 
+top_img: 
 abbrlink: ab21860c
 ---
 
