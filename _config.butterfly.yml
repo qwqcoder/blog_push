@@ -51,10 +51,10 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img: /img/cover/wyy2.png
+index_img: /img/centaur.jpg
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: /img/cover/wyy2.png
+default_top_img: /img/default_top_img.jpg
 
 # The banner image of archive page
 archive_img:
@@ -209,7 +209,8 @@ footer:
     enable: true
     since: 2024
   custom_text: qwqcoder
-  copyright: true # Copyright of theme and framework
+  copyright: false # Copyright of theme and framework
+
 
 # aside (側邊欄)
 # --------------------------------------
@@ -276,6 +277,7 @@ busuanzi:
   site_uv: true
   site_pv: true
   page_pv: true
+
 
 # Time difference between publish date and now (網頁運行時間)
 # Formal: Month/Day/Year Time or Year/Month/Day Time
@@ -345,7 +347,7 @@ rightside_item_order:
 
 # MathJax
 mathjax:
-  enable: false
+  enable: true
   per_page: false
 
 # KaTeX
