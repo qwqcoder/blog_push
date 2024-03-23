@@ -445,4 +445,224 @@ x^2-\ln^2(1+x)&\sim x^3 \\
         <tag>math</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java 语法学习</title>
+    <url>/2024/03/21/80bdef1f.html</url>
+    <content><![CDATA[<h1 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h1><ul>
+<li><p><code>Scanner</code>, <code>System.out.printf()</code></p>
+</li>
+<li><p><code>BufferedReader</code>, <code>BufferedWriter</code></p>
+<p><strong>注意: </strong><code>BufferedWriter</code> 需要手动刷新缓冲区</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">/*Scanner输入*/</span></span><br><span class="line">        <span class="type">Scanner</span> <span class="variable">sc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> sc.next();  <span class="comment">// 读入下一个字符串</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> sc.nextInt();  <span class="comment">// 读入下一个整数</span></span><br><span class="line">        <span class="type">float</span> <span class="variable">y</span> <span class="operator">=</span> sc.nextFloat();  <span class="comment">// 读入下一个单精度浮点数</span></span><br><span class="line">        <span class="type">double</span> <span class="variable">z</span> <span class="operator">=</span> sc.nextDouble();  <span class="comment">// 读入下一个双精度浮点数</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">line</span> <span class="operator">=</span> sc.nextLine();  <span class="comment">// 读入下一行</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*BufferedReader输入*/</span></span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(System.in));</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> br.readLine();</span><br><span class="line">        System.out.println(str);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*printf()输出*/</span></span><br><span class="line">        System.out.println(<span class="number">123</span>);  <span class="comment">// 输出整数 + 换行</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World&quot;</span>);  <span class="comment">// 输出字符串 + 换行</span></span><br><span class="line">        System.out.print(<span class="number">123</span>);  <span class="comment">// 输出整数</span></span><br><span class="line">        System.out.print(<span class="string">&quot;yxc\n&quot;</span>);  <span class="comment">// 输出字符串</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;%04d %.2f\n&quot;</span>, <span class="number">4</span>, <span class="number">123.456D</span>);  <span class="comment">// 格式化输出，float与double都用%f输出</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*BufferedWriter输出*/</span></span><br><span class="line">        <span class="type">BufferedWriter</span> <span class="variable">bw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(<span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(System.out));</span><br><span class="line">        bw.write(<span class="string">&quot;Hello World\n&quot;</span>);</span><br><span class="line">        bw.flush();  <span class="comment">// 需要手动刷新缓冲区</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h2><ul>
+<li>定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] a = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span>[] b; <span class="comment">// 未初始化，需要在后续代码中为其分配内存空间</span></span><br><span class="line"><span class="comment">// 上面两行代码可以简写为如下代码</span></span><br><span class="line"><span class="type">int</span>[] a = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>], b;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] a = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;;        <span class="comment">// 含有3个元素的数组，元素分别是0, 1, 2</span></span><br><span class="line"><span class="type">int</span>[] b = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">3</span>];       <span class="comment">// 含有3个元素的数组，元素的值均为0</span></span><br><span class="line"><span class="type">char</span>[] d = &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;; <span class="comment">// 字符数组的初始化, 字符数组默认初始化为 \u0000 (不可见字符)</span></span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><ul>
+<li>定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[][] a = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">3</span>][<span class="number">4</span>]; <span class="comment">// 大小为3的数组，每个元素是含有4个整数的数组。</span></span><br><span class="line"><span class="type">int</span>[][][] b = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>][<span class="number">20</span>][<span class="number">30</span>]; <span class="comment">// 将所有元素的初值为0</span></span><br><span class="line"><span class="comment">// 大小为10的数组，它的每个元素是含有20个数组的数组</span></span><br><span class="line"><span class="comment">// 这些数组的元素是含有30个整数的数组</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[][] a = &#123;           <span class="comment">// 三个元素，每个元素都是大小为4的数组</span></span><br><span class="line">            &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;,       <span class="comment">// 第1行的初始值</span></span><br><span class="line">            &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;,       <span class="comment">// 第2行的初始值</span></span><br><span class="line">            &#123;<span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>&#125;      <span class="comment">// 第3行的初始值</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++ )  <span class="comment">// 将第一行全部变成0</span></span><br><span class="line">    a[<span class="number">0</span>][i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">3</span>; i ++ ) &#123;  <span class="comment">// 输出二维数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">4</span>; j ++ ) &#123;</span><br><span class="line">        System.out.printf(<span class="string">&quot;%d &quot;</span>, a[i][j]);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 <strong>API</strong></h2><ul>
+<li>属性: <code>length</code>, 返回数组长度</li>
+<li><code>Arrays.sort()</code>, 数组排序</li>
+<li><code>Arrays.fill(int[] a, int val)</code>, 填充数组</li>
+<li><code>Arrays.toString</code>, 将数组转为字符串</li>
+<li><code>Arrays.deepToString</code>, 将多维数组转为字符串</li>
+<li>数组不可扩容</li>
+<li>使用 <code>Arrays</code> 需要 <code>import java.util.Arrays</code></li>
+</ul>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><ul>
+<li><p>每个常用字符都对应一个 <code>-128 ~ 127</code> 的数字，二者之间可以相互转化。注意：目前负数没有与之对应的字符。</p>
+</li>
+<li><p>常用ASCII值：<code>&#39;A&#39;- &#39;Z&#39;</code> 是65 ~ 90，<code>&#39;a&#39; - &#39;z&#39;</code> 是 <code>97 - 122</code>，<code>0 - 9</code> 是 </p>
+<p><code>48 - 57</code>。<br>字符可以参与运算，运算时会将其当做整数</p>
+</li>
+</ul>
+<h2 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h2><ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">b</span> <span class="operator">=</span> <span class="string">&quot;My name is &quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">x</span> <span class="operator">=</span> b;  <span class="comment">// 存储到了相同地址</span></span><br><span class="line"><span class="type">String</span> <span class="variable">c</span> <span class="operator">=</span> b + <span class="string">&quot;yxc&quot;</span>;  <span class="comment">// String可以通过加号拼接</span></span><br><span class="line"><span class="type">String</span> <span class="variable">d</span> <span class="operator">=</span> <span class="string">&quot;My age is &quot;</span> + <span class="number">18</span>;  <span class="comment">// int会被隐式转化成字符串&quot;18&quot;</span></span><br><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> String.format(<span class="string">&quot;My age is %d&quot;</span>, <span class="number">18</span>);  <span class="comment">// 格式化字符串，类似于C++中的sprintf</span></span><br><span class="line"><span class="type">String</span> <span class="variable">money_str</span> <span class="operator">=</span> <span class="string">&quot;123.45&quot;</span>;</span><br><span class="line"><span class="type">double</span> <span class="variable">money</span> <span class="operator">=</span> Double.parseDouble(money_str);  <span class="comment">// String转double</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在Java中，String 类是不可变的，这意味着一旦创建了一个字符串对象，它的内容就不能被修改。执行 <code>a += &quot;World&quot;;</code> 这样的字符串拼接操作时，实际上会创建一个新的字符串对象，其中包含了原始字符串 “Hello “ 和新字符串 “World” 的连接结果。</p>
+</blockquote>
+<ul>
+<li>访问</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i ++ ) &#123;</span><br><span class="line">    System.out.print(str.charAt(i));  <span class="comment">// 只能读取，不能写入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>常用 API</li>
+</ul>
+<ol>
+<li><p><code>length()</code>：返回长度</p>
+</li>
+<li><p><code>split(String regex)</code>：分割字符串</p>
+</li>
+<li><p><code>indexOf(char c)</code>、<code>indexOf(String str)</code>、<code>lastIndexOf(char c)</code>、<code>lastIndexOf(String str)</code>：查找，找不到返回 <code>-1</code></p>
+</li>
+<li><p><code>equals()</code>：判断两个字符串是否相等，注意不能直接用 <code>==</code></p>
+</li>
+<li><p><code>compareTo()</code>：判断两个字符串的字典序大小，负数表示小于，<code>0</code> 表示相等，正数表示大于</p>
+</li>
+<li><p><code>startsWith()</code>：判断是否以某个前缀开头</p>
+</li>
+<li><p><code>endsWith()</code>：判断是否以某个后缀结尾</p>
+</li>
+<li><p><code>trim()</code>：去掉首尾的空白字符</p>
+</li>
+<li><p><code>toLowerCase()</code>：全部用小写字符</p>
+</li>
+<li><p><code>toUpperCase()</code>：全部用大写字符</p>
+</li>
+<li><p><code>replace(char oldChar, char newChar)</code>：替换字符</p>
+</li>
+<li><p><code>replace(String oldRegex, String newRegex)</code>：替换字符串</p>
+</li>
+<li><p><code>substring(int beginIndex, int endIndex)</code>：</p>
+<p>返回 <code>[beginIndex, endIndex)</code> 中的子串</p>
+</li>
+<li><p><code>toCharArray()</code>：将字符串转化成字符数组</p>
+</li>
+</ol>
+<ul>
+<li>输入输出</li>
+</ul>
+<ol>
+<li><code>Scanner.next()</code></li>
+<li><code>Scanner.nextLine()</code></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Scanner</span> <span class="variable">sc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">        <span class="type">String</span> <span class="variable">str1</span> <span class="operator">=</span> sc.next();  <span class="comment">// 输入字符串，遇到空格、回车等空白字符时停止输入</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> sc.nextLine();  <span class="comment">// 输入一整行字符串，遇到空格不会停止输入，遇到回车才会停止</span></span><br><span class="line"></span><br><span class="line">        System.out.println(str1);  <span class="comment">// 可以直接输出</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;%s\n&quot;</span>, str2);  <span class="comment">// 也可以格式化输出，用 %s 表示字符串</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>StringBuilder</code>, <code>StringBuffer</code></li>
+</ul>
+<ol>
+<li><p><code>String</code> 无法修改, 如果想要修改字符串, 可以使用 <code>StringBuilder</code>, <code>StringBuffer</code></p>
+</li>
+<li><p><code>StringBuffer</code> 线程安全，速度较慢；<code>StringBuilder</code> 线程不安全，速度较快。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;Hello &quot;</span>);  <span class="comment">// 初始化</span></span><br><span class="line">sb.append(<span class="string">&quot;World&quot;</span>);  <span class="comment">// 拼接字符串</span></span><br><span class="line">System.out.println(sb);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; sb.length(); i ++ ) &#123;</span><br><span class="line">    sb.setCharAt(i, (<span class="type">char</span>)(sb.charAt(i) + <span class="number">1</span>));  <span class="comment">// 读取和写入字符</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">System.out.println(sb);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常使用  <code>reverse()</code> 翻转字符串</p>
+</blockquote>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><ul>
+<li>参数传递</li>
+</ul>
+<ol>
+<li>值传递</li>
+<li>引用传递</li>
+</ol>
+<ul>
+<li><p>值传递</p>
+<p>八大基本数据类型和 <code>String</code> 类型等采用值传递。</p>
+<p><strong>将实参的初始值拷贝给形参</strong>。此时，对形参的改动不会影响实参的初始值。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        x = <span class="number">5</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">        f(x);</span><br><span class="line">        System.out.println(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>引用传递</p>
+<p>除 <code>String</code> 以外的数据类型的对象，例如数组、<code>StringBuilder</code> 等采用引用传递。</p>
+<p>将实参的引用（<strong>地址</strong>）传给形参，通过引用找到变量的真正地址，然后对地址中的值修改。所以此时对形参的修改会影响实参的初始值。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">f1</span><span class="params">(<span class="type">int</span>[] a)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = a.length - <span class="number">1</span>; i &lt; j; i ++, j -- ) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">t</span> <span class="operator">=</span> a[i];</span><br><span class="line">            a[i] = a[j];</span><br><span class="line">            a[j] = t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">f2</span><span class="params">(StringBuilder sb)</span> &#123;</span><br><span class="line">        sb.append(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] a = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">        f1(a);</span><br><span class="line">        System.out.println(Arrays.toString(a));</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        f2(sb);</span><br><span class="line">        System.out.println(sb);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h2><p> 类的定义</p>
+<ul>
+<li><p><code>public</code>: 所有对象均可以访问</p>
+</li>
+<li><p><code>private</code>: 只有本类内部可以访问</p>
+</li>
+<li><p><code>protected</code>：同一个包或者子类中可以访问</p>
+</li>
+<li><p>不添加修饰符：在同一个包中可以访问</p>
+</li>
+<li><p>静态（带static修饰符）成员变量/函数与普通成员变量/函数的区别：</p>
+<p>所有static成员变量/函数在类中只有一份，被所有类的对象共享；<br>所有普通成员变量/函数在类的每个对象中都有独立的一份；</p>
+</li>
+</ul>
+<blockquote>
+<p>静态函数中只能调用静态函数/变量；普通函数中既可以调用普通函数/变量，也可以调用静态函数/变量。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Point</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setX</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setY</span><span class="params">(<span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getX</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getY</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">&quot;(%d, %d)&quot;</span>, x, y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h2><p>每个类只能继承一个父类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ColorPoint</span> <span class="keyword">extends</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ColorPoint</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, String color)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(x, y);</span><br><span class="line">        <span class="built_in">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setColor</span><span class="params">(String color)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">&quot;(%d, %d, %s)&quot;</span>, <span class="built_in">super</span>.getX(), <span class="built_in">super</span>.getY(), <span class="built_in">this</span>.color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Point</span> <span class="variable">point</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">        <span class="type">Point</span> <span class="variable">colorPoint</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ColorPoint</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 多态，同一个类的实例，调用相同的函数，运行结果不同</span></span><br><span class="line">        System.out.println(point.toString());</span><br><span class="line">        System.out.println(colorPoint.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口-1"><a href="#接口-1" class="headerlink" title="接口"></a>接口</h2><p><code>interface</code> 与 <code>class</code> 类似。主要用来定义类中所需包含的函数。</p>
+<p><strong>接口也可以继承其他接口，一个类可以实现多个接口。</strong></p>
+<ul>
+<li>定义</li>
+</ul>
+<p>接口不添加修饰符时, 默认为 <code>public</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Role</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greet</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSpeed</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>继承</li>
+</ul>
+<p>接口可以继承多个接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Hero</span> <span class="keyword">extends</span> <span class="title class_">Role</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attack</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>实现</li>
+</ul>
+<p>每个类可以实现多个接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Zeus</span> <span class="keyword">implements</span> <span class="title class_">Hero</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Zeus&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attack</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Attack!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greet</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Hi!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Move!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSpeed</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>多态</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Athena</span> <span class="keyword">implements</span> <span class="title class_">Hero</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Athena&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attack</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Attack!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greet</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Hi!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Move!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSpeed</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Hero[] heros = &#123;<span class="keyword">new</span> <span class="title class_">Zeus</span>(), <span class="keyword">new</span> <span class="title class_">Athena</span>()&#125;;</span><br><span class="line">        <span class="keyword">for</span> (Hero hero: heros) &#123;</span><br><span class="line">            hero.greet();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多路归并</title>
+    <url>/2024/03/18/d14b420f.html</url>
+    <content><![CDATA[<ul>
+<li><a href="https://www.acwing.com/problem/content/4659/">例题1, 技能升级</a></li>
+</ul>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并 + 二分</strong></p>
+<blockquote>
+<p>多路等差数列:<br>10 5<br>9 7 5 3 1<br>8 7 6 5 4 3 2 1</p>
+<p>从多个数列(这里是等差数列)中, 找到前 <code>m</code> 大的数, 求和输出答案</p>
+<p>运用二分, 枚举 <code>mid</code>, 并用 <code>check(int mid)</code> 函数判断, 具体过程如下, 对于每个等差数列, 根据 <code>mid</code> 判断其有多少个项大于 <code>mid</code>, 累计数量到 <code>cnt</code>, 循环完成 <code>n</code> 个等差数列后, 判断 <code>cnt &gt;= m</code>,<br>最后使用 <code>ans</code> 累计这些前 <code>m</code> 大的数的和, 注意这里的等差数列中可能包含多个等于 <code>mid</code> 的项, 多出来的数量为 <code>cnt − m</code> 个</p>
+<p><code>ans − (cnt − m) ∗ l</code> 即是最终答案</p>
+</blockquote>
+<p>😥😥😥, 猪脑过载, </p>
+<ul>
+<li><a href="https://www.acwing.com/problem/content/description/58/">例题2</a></li>
+</ul>
+<h1 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并</strong></p>
+<blockquote>
+<p>创建两个队列, 分别存放包含 2, 3, 5这些质因子的数</p>
+<p>一开始, <code>a</code> 队列只有 2 一个数, <code>b</code> 队列只有 3 一个数, <code>c</code> 队列只有 5 一个数</p>
+<p>操作步骤为, 每次从 <code>a, b, c</code> 三个队列中取出队头最小的那个数记为 <code>curr</code>, 同时将 <code>curr * 2</code> 放入 <code>a</code> 队列, <code>curr * 3</code> 放入 <code>b</code> 队列, <code>curr * 5</code> 放入 <code>c</code> 队列. 这样子每个</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>多路归并</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树相关算法</title>
+    <url>/2024/03/19/59a207d0.html</url>
+    <content><![CDATA[<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><h2 id="根据中后序遍历构造先序遍历"><a href="#根据中后序遍历构造先序遍历" class="headerlink" title="根据中后序遍历构造先序遍历"></a>根据中后序遍历构造先序遍历</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">char</span> data;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">node</span> * lchild, rchild;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> * <span class="built_in">build</span>(<span class="type">char</span> *post,<span class="type">char</span> *in,<span class="type">int</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    node *b;</span><br><span class="line">    <span class="type">char</span> r,*p;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    <span class="keyword">if</span>(le n&lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    r = *(post + len - <span class="number">1</span>); <span class="comment">// 从后序遍历中最后一项直接得到根节点</span></span><br><span class="line">    b=(node *)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(node));</span><br><span class="line">    b-&gt;data = r;</span><br><span class="line">    <span class="keyword">for</span>(p = in;p &lt; in + len;p ++) <span class="comment">// 在中序遍历中找到根节点</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*p == r)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    k = p - in; <span class="comment">//计算左子树的包含节点个数</span></span><br><span class="line">    b-&gt;lchild = <span class="built_in">build</span>(post,in,k);</span><br><span class="line">    b-&gt;rchild = <span class="built_in">build</span>(post + k, p + <span class="number">1</span>, len - k - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>tree algorithm</tag>
+      </tags>
+  </entry>
 </search>
