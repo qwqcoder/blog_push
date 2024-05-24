@@ -3,7 +3,8 @@ title: ES6
 tags: javaScript
 description: 学习使用 ES6 新特性
 top_img: /img/cover/wyy2.png
-cover:基础
+cover: 基础
+abbrlink: d73c0d37
 ---
 
 # 基础
