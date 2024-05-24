@@ -3,11 +3,8 @@ title: ES6
 tags: javaScript
 description: 学习使用 ES6 新特性
 top_img: /img/cover/wyy2.png
-date:
 cover:基础
 ---
-
-
 
 # 基础
 
@@ -23,8 +20,6 @@ cover:基础
        console.log(book);
    }
    ```
-
-   
 
 3. 不存在变量提升
 
