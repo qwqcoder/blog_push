@@ -2,7 +2,7 @@
 title: Os学习
 tag: os
 categories: 408
-abbrlink: 317b894e
+abbrlink:
 ---
 
 
