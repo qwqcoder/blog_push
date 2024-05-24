@@ -1,7 +1,6 @@
 ---
 title: ES6
-tags:
-  - javaScript
+tags: javaScript
 description: 学习使用 ES6 新特性
 top_img: /img/cover/wyy2.png
 date:

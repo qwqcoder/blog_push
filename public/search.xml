@@ -49,6 +49,101 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue学习</title>
+    <url>/2024/03/24/317b894e.html</url>
+    <content><![CDATA[<h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1>]]></content>
+      <categories>
+        <category>front_end</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo</title>
+    <url>/2024/03/07/ab21860c.html</url>
+    <content><![CDATA[<h1 id="关于配置文件"><a href="#关于配置文件" class="headerlink" title="关于配置文件"></a>关于配置文件</h1><p>在 <code>hexo</code> 的根目录创建一个文件 <code>_config.butterfly.yml</code>，并把主题目录的 <code>_config.yml</code>内容复制到<code>_config.butterfly.yml</code> 中。( 注意: 复制的是主題的 <code>_config.yml</code> ，而不是 <code>hexo</code> 的 <code>_config.yml</code>)</p>
+<blockquote>
+<p><strong>注意</strong>： 不能把主題目录的 <code>_config.yml</code>删掉</p>
+</blockquote>
+<p>注意： 以后只需要在 <code>_config.butterfly.yml</code> 进行配置就行。<br>如果使用了 <code>_config.butterfly.yml</code>， 配置主题的 <code>_config.yml</code> 将不会有效果。</p>
+<p><code>Hexo</code>会自动合并主题中的 <code>_config.yml</code> 和 <code>_config.butterfly.yml</code> 里的配置，如果存在同名配置，会使用 <code>_config.butterfly.yml</code> 的配置，其优先度较高。</p>
+<h1 id="博客撰写步骤"><a href="#博客撰写步骤" class="headerlink" title="博客撰写步骤"></a>博客撰写步骤</h1><p><strong>第一步</strong>: 创建 <code>.md</code> 文件</p>
+<ul>
+<li><p>方法一: <code>cd</code> 进入 <code>hexo</code> 根目录, 在 <code>Git Bash Here</code> 中执行命令: <code>hexo new &#39;blog-name&#39;</code> , 此时 <code>hexo</code> 会在 <code>\source\_posts</code> 下生成名为 <code>blog-name</code> 的 <code>.md</code> 文件, 用这个命令可以自动生成文件, 其中包含默认内容如下:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">blog-name</span></span><br><span class="line"><span class="attr">date:</span> <span class="string">创建时间</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag1</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag2</span> <span class="comment"># 一定注意空格</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">description</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">封面地址</span></span><br><span class="line"><span class="attr">top_img:</span> <span class="string">个性化顶部图</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法二: 也可以手动创建 <code>.md</code> 文件</p>
+</li>
+</ul>
+<p><strong>第二步</strong>: 编写 <code>md</code> 文档内容并保存</p>
+<ul>
+<li>使用 <code>markdown</code> 语法, 撰写博客内容即可</li>
+</ul>
+<p><strong>第三步</strong>: 清理然后生成, 然后推送到远端仓库</p>
+<ul>
+<li><p><code>hexo</code> 根目录下进入 <code>bash</code> 终端, 依次输入以下命令:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="优化博客链接配置"><a href="#优化博客链接配置" class="headerlink" title="优化博客链接配置"></a>优化博客链接配置</h1><p><code>Hexo</code> 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
+<p>这样一来, 当我们修改了文章的日期或者标题, 链接很可能就失效了, 特别是文章标题包含中文时, 被转译为 URL 编码后, 链接就特别长😣😣😣</p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li><p>安装插件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 <code>_config.yml</code> 配置文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="个性化blog图片"><a href="#个性化blog图片" class="headerlink" title="个性化blog图片"></a>个性化blog图片</h1><ul>
+<li>修改主题路径下的 <code>_config.yml</code> 配置文件</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">cover:</span></span><br><span class="line">  <span class="comment"># display the cover or not (是否顯示文章封面)</span></span><br><span class="line">  <span class="attr">index_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">aside_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">archives_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># the position of cover in home page (封面顯示的位置)</span></span><br><span class="line">  <span class="comment"># left/right/both</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">  <span class="comment"># When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)</span></span><br><span class="line">  <span class="attr">default_cover:</span></span><br><span class="line">    <span class="comment"># - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg</span></span><br></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index_enable</td>
+<td>主页是否显示文章封面</td>
+</tr>
+<tr>
+<td>aside_enable</td>
+<td>侧栏是否显示</td>
+</tr>
+<tr>
+<td>archives_enable</td>
+<td>归档页面是否显示文章封面</td>
+</tr>
+<tr>
+<td>position</td>
+<td>主页卡片文章封面显示位置<br />- left：全部显示左边<br />- right：全部显示右边<br />- both：左右交替</td>
+</tr>
+<tr>
+<td>default_cover</td>
+<td>默认的图片配置</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">default_cover:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png</span></span><br></pre></td></tr></table></figure>
+<h1 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h1><ul>
+<li>检索功能</li>
+<li>评论功能</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Os学习</title>
     <url>/2024/05/24/317b894e.html</url>
     <content><![CDATA[<h1 id="操作系统概述"><a href="#操作系统概述" class="headerlink" title="操作系统概述"></a>操作系统概述</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><img src="https://s2.loli.net/2024/05/22/8np472uVzbZNsxO.png" alt="image-20240208193411962"></p>
@@ -793,101 +888,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue学习</title>
-    <url>/2024/03/24/317b894e.html</url>
-    <content><![CDATA[<h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1>]]></content>
-      <categories>
-        <category>front_end</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo</title>
-    <url>/2024/03/07/ab21860c.html</url>
-    <content><![CDATA[<h1 id="关于配置文件"><a href="#关于配置文件" class="headerlink" title="关于配置文件"></a>关于配置文件</h1><p>在 <code>hexo</code> 的根目录创建一个文件 <code>_config.butterfly.yml</code>，并把主题目录的 <code>_config.yml</code>内容复制到<code>_config.butterfly.yml</code> 中。( 注意: 复制的是主題的 <code>_config.yml</code> ，而不是 <code>hexo</code> 的 <code>_config.yml</code>)</p>
-<blockquote>
-<p><strong>注意</strong>： 不能把主題目录的 <code>_config.yml</code>删掉</p>
-</blockquote>
-<p>注意： 以后只需要在 <code>_config.butterfly.yml</code> 进行配置就行。<br>如果使用了 <code>_config.butterfly.yml</code>， 配置主题的 <code>_config.yml</code> 将不会有效果。</p>
-<p><code>Hexo</code>会自动合并主题中的 <code>_config.yml</code> 和 <code>_config.butterfly.yml</code> 里的配置，如果存在同名配置，会使用 <code>_config.butterfly.yml</code> 的配置，其优先度较高。</p>
-<h1 id="博客撰写步骤"><a href="#博客撰写步骤" class="headerlink" title="博客撰写步骤"></a>博客撰写步骤</h1><p><strong>第一步</strong>: 创建 <code>.md</code> 文件</p>
-<ul>
-<li><p>方法一: <code>cd</code> 进入 <code>hexo</code> 根目录, 在 <code>Git Bash Here</code> 中执行命令: <code>hexo new &#39;blog-name&#39;</code> , 此时 <code>hexo</code> 会在 <code>\source\_posts</code> 下生成名为 <code>blog-name</code> 的 <code>.md</code> 文件, 用这个命令可以自动生成文件, 其中包含默认内容如下:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">blog-name</span></span><br><span class="line"><span class="attr">date:</span> <span class="string">创建时间</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag1</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag2</span> <span class="comment"># 一定注意空格</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">description</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">封面地址</span></span><br><span class="line"><span class="attr">top_img:</span> <span class="string">个性化顶部图</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方法二: 也可以手动创建 <code>.md</code> 文件</p>
-</li>
-</ul>
-<p><strong>第二步</strong>: 编写 <code>md</code> 文档内容并保存</p>
-<ul>
-<li>使用 <code>markdown</code> 语法, 撰写博客内容即可</li>
-</ul>
-<p><strong>第三步</strong>: 清理然后生成, 然后推送到远端仓库</p>
-<ul>
-<li><p><code>hexo</code> 根目录下进入 <code>bash</code> 终端, 依次输入以下命令:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="优化博客链接配置"><a href="#优化博客链接配置" class="headerlink" title="优化博客链接配置"></a>优化博客链接配置</h1><p><code>Hexo</code> 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
-<p>这样一来, 当我们修改了文章的日期或者标题, 链接很可能就失效了, 特别是文章标题包含中文时, 被转译为 URL 编码后, 链接就特别长😣😣😣</p>
-<p><strong>解决方案</strong></p>
-<ul>
-<li><p>安装插件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改 <code>_config.yml</code> 配置文件</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="个性化blog图片"><a href="#个性化blog图片" class="headerlink" title="个性化blog图片"></a>个性化blog图片</h1><ul>
-<li>修改主题路径下的 <code>_config.yml</code> 配置文件</li>
-</ul>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">cover:</span></span><br><span class="line">  <span class="comment"># display the cover or not (是否顯示文章封面)</span></span><br><span class="line">  <span class="attr">index_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">aside_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">archives_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># the position of cover in home page (封面顯示的位置)</span></span><br><span class="line">  <span class="comment"># left/right/both</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">  <span class="comment"># When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)</span></span><br><span class="line">  <span class="attr">default_cover:</span></span><br><span class="line">    <span class="comment"># - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg</span></span><br></pre></td></tr></table></figure>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>index_enable</td>
-<td>主页是否显示文章封面</td>
-</tr>
-<tr>
-<td>aside_enable</td>
-<td>侧栏是否显示</td>
-</tr>
-<tr>
-<td>archives_enable</td>
-<td>归档页面是否显示文章封面</td>
-</tr>
-<tr>
-<td>position</td>
-<td>主页卡片文章封面显示位置<br />- left：全部显示左边<br />- right：全部显示右边<br />- both：左右交替</td>
-</tr>
-<tr>
-<td>default_cover</td>
-<td>默认的图片配置</td>
-</tr>
-</tbody>
-</table>
-</div>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">default_cover:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png</span></span><br></pre></td></tr></table></figure>
-<h1 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h1><ul>
-<li>检索功能</li>
-<li>评论功能</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo远端部署</title>
     <url>/2024/03/15/f1705634.html</url>
     <content><![CDATA[<h1 id="创建hexo项目"><a href="#创建hexo项目" class="headerlink" title="创建hexo项目"></a>创建hexo项目</h1><p><img src="https://s2.loli.net/2024/03/16/ZcelUIzSBPvW4XO.png" alt="image-20240315212549119"></p>
@@ -1026,196 +1026,6 @@
         <tag>hexo</tag>
         <tag>nginx</tag>
         <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git操作</title>
-    <url>/2024/03/15/46390b34.html</url>
-    <content><![CDATA[<ul>
-<li><p><code>git branch -f master HEAD~3</code></p>
-<p>强制使得 <code>master</code> 分支指向 <code>HEAD</code> 向上追溯 $3$ 次的位置</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ssh访问</title>
-    <url>/2024/03/16/6cede086.html</url>
-    <content><![CDATA[<h1 id="ssh连接过程"><a href="#ssh连接过程" class="headerlink" title="ssh连接过程"></a>ssh连接过程</h1><h2 id="密钥类型"><a href="#密钥类型" class="headerlink" title="密钥类型"></a>密钥类型</h2><p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001710619.png" alt="image-20240316001710619"></p>
-<p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001727647.png" alt="image-20240316001727647"></p>
-<h2 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h2><p><code>SSH(Secure Shell)</code>是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：</p>
-<ol>
-<li><p><strong>客户端发起连接请求：</strong> 用户在本地计算机上的 <code>SSH</code> 客户端（比如 <code>OpenSSH</code> 或 <code>PuTTY</code>）输入远程服务器的地址和用户名，并发起连接请求。</p>
-</li>
-<li><p><strong>服务器端响应：</strong> 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。</p>
-</li>
-<li><p><strong>密钥交换：</strong> 客户端和服务器之间进行密钥交换，确保数据传输的安全性。这个过程通常包括以下步骤：</p>
-<ul>
-<li>客户端向服务器发送一个连接请求，并发送自己支持的加密算法列表。</li>
-<li>服务器从接收到的加密算法列表中选择一个加密算法，并发送自己的公钥给客户端。</li>
-<li>客户端使用服务器的公钥对一个随机生成的<strong>会话密钥(对称密钥)</strong>进行加密，并将加密后的会话密钥发送给服务器。</li>
-<li>服务器使用自己的私钥解密客户端发送的会话密钥。</li>
-</ul>
-</li>
-<li><p><strong>认证：</strong> 客户端将用户凭据（如密码或 SSH 密钥）发送给服务器进行身份认证。如果凭据验证成功，客户端将被授权访问服务器。</p>
-</li>
-<li><p><strong>会话建立：</strong> 认证成功后，客户端和服务器建立起安全的通信会话，可以在该会话中安全地传输数据。</p>
-</li>
-<li><p><strong>数据传输：</strong> 客户端和服务器之间可以安全地传输数据，包括登录命令、文件传输、远程执行命令等操作。</p>
-</li>
-<li><p><strong>连接关闭：</strong> 当用户退出登录或连接超时时，连接被关闭，SSH 会话结束。</p>
-</li>
-</ol>
-<p>总的来说，SSH 连接的流程涉及到密钥交换、身份认证和安全通信会话建立等步骤，确保了数据传输的安全性和可靠性。</p>
-<h1 id="区分authorized-keys与known-hosts文件"><a href="#区分authorized-keys与known-hosts文件" class="headerlink" title="区分authorized_keys与known_hosts文件"></a>区分authorized_keys与known_hosts文件</h1><p><code>authorized_keys</code> 和 <code>known_hosts</code> 都是与 SSH 密钥认证相关的文件，但它们在功能和用途上有所不同：</p>
-<ol>
-<li><p><strong>authorized_keys：</strong></p>
-<ul>
-<li>位置：<code>authorized_keys</code> 文件位于服务器上的用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/authorized_keys</code>）。</li>
-<li>用途：<code>authorized_keys</code> 文件用于存储用户的公钥，以便服务器可以使用这些公钥来验证用户的身份。当用户尝试通过 SSH 连接到服务器时，服务器会检查该用户的 <code>authorized_keys</code> 文件，以确定是否允许连接。如果用户的公钥在 <code>authorized_keys</code> 文件中被发现，则服务器会允许用户连接，并使用相应的私钥进行身份验证。</li>
-</ul>
-</li>
-<li><p><strong>known_hosts：</strong></p>
-<ul>
-<li>位置：<code>known_hosts</code> 文件位于用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/known_hosts</code>）。</li>
-<li>用途：<code>known_hosts</code> 文件用于存储用户访问过的远程主机的公钥信息。当用户首次连接到一个远程主机时，SSH 客户端会将该主机的公钥保存到自己的 <code>known_hosts</code> 文件中。随后，当用户再次连接到同一台主机时，SSH 客户端会使用 <code>known_hosts</code> 文件中存储的公钥来验证主机的身份，以确保连接的安全性。</li>
-</ul>
-</li>
-</ol>
-<p>因此，<code>authorized_keys</code> 文件用于服务器端存储用户的公钥，用于用户的身份验证；而 <code>known_hosts</code> 文件用于客户端存储已知主机的公钥，用于验证远程主机的身份。这两个文件在 SSH 认证过程中扮演着不同的角色，但都是确保连接安全性的重要组成部分。</p>
-]]></content>
-      <tags>
-        <tag>ssh</tag>
-        <tag>rsa加密</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多路归并</title>
-    <url>/2024/03/18/d14b420f.html</url>
-    <content><![CDATA[<ul>
-<li><a href="https://www.acwing.com/problem/content/4659/">例题1, 技能升级</a></li>
-</ul>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并 + 二分</strong></p>
-<blockquote>
-<p>多路等差数列:<br>10 5<br>9 7 5 3 1<br>8 7 6 5 4 3 2 1</p>
-<p>从多个数列(这里是等差数列)中, 找到前 <code>m</code> 大的数, 求和输出答案</p>
-<p>运用二分, 枚举 <code>mid</code>, 并用 <code>check(int mid)</code> 函数判断, 具体过程如下, 对于每个等差数列, 根据 <code>mid</code> 判断其有多少个项大于 <code>mid</code>, 累计数量到 <code>cnt</code>, 循环完成 <code>n</code> 个等差数列后, 判断 <code>cnt &gt;= m</code>,<br>最后使用 <code>ans</code> 累计这些前 <code>m</code> 大的数的和, 注意这里的等差数列中可能包含多个等于 <code>mid</code> 的项, 多出来的数量为 <code>cnt − m</code> 个</p>
-<p><code>ans − (cnt − m) ∗ l</code> 即是最终答案</p>
-</blockquote>
-<p>😥😥😥, 猪脑过载, </p>
-<ul>
-<li><a href="https://www.acwing.com/problem/content/description/58/">例题2</a></li>
-</ul>
-<h1 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并</strong></p>
-<blockquote>
-<p>创建两个队列, 分别存放包含 2, 3, 5这些质因子的数</p>
-<p>一开始, <code>a</code> 队列只有 2 一个数, <code>b</code> 队列只有 3 一个数, <code>c</code> 队列只有 5 一个数</p>
-<p>操作步骤为, 每次从 <code>a, b, c</code> 三个队列中取出队头最小的那个数记为 <code>curr</code>, 同时将 <code>curr * 2</code> 放入 <code>a</code> 队列, <code>curr * 3</code> 放入 <code>b</code> 队列, <code>curr * 5</code> 放入 <code>c</code> 队列. 这样子每个</p>
-</blockquote>
-<ul>
-<li><a href="https://www.acwing.com/problem/content/description/1380/">例题3</a></li>
-</ul>
-<p><strong>多路合并</strong></p>
-<p><strong>定义</strong>: 丑数是一组质数集合 $S$ 中若干个质数(可重复)的乘积, </p>
-<p><strong>题意</strong>: 从给定包含 $k$ 个不同质数的集合 $S = {p_1, p_2,…,p_k}$ 中找到从小到大的第 $K$ 大的丑数</p>
-<h1 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h1><blockquote>
-<p>一个显然的性质是，任意一个丑数都可以由另一个比他小的丑数乘以一个质数因子得到。</p>
-<p>那么构造一个数组 <code>f</code> 用来从小到大更新丑数，<code>f[0]=1</code> 特判, 对于下一个丑数的更新, 构造如下:</p>
-<p>对于每一个质因子<code>a[j]</code>, 我们用已经构造出的前 <code>i</code> 个丑数依次与 <code>a[j]</code> 做乘法, 从而构造出一个新的丑数,  对于每个质数 <code>a[j]</code>, 分别找到丑数 <code>a[j] * f[idx]</code>(满足 <code>a[j]*f[idx]</code> 刚好大于 <code>f[i-1]</code> 即可), 并找到最小的那个丑数作为 <code>f[i]</code>。往后的更新就用不着 <code>idx</code> 之前的丑数了，所以用个 <code>b</code> 数组记录第 <code>i</code> 个质数枚举 <code>f[i]</code> 的下标位置</p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> k,n;</span><br><span class="line"><span class="type">int</span> a[N],f[N],b[N];</span><br><span class="line"><span class="comment">// a 数组用于存放给定的质数集合，f 数组从小到大记录丑数</span></span><br><span class="line"><span class="comment">// b 数组记录第 i 个质因子的枚举位置</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; k &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>;i &lt;= k;i++)  cin &gt;&gt; a[i];</span><br><span class="line">    f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++) &#123;</span><br><span class="line">        <span class="type">int</span> minx = <span class="number">2e9</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>;j &lt;= k;j++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (a[j]*f[b[j]] &lt;= f[i<span class="number">-1</span>]) b[j]++;</span><br><span class="line">            minx = <span class="built_in">min</span> (minx,a[j]*f[b[j]]);</span><br><span class="line">        &#125;</span><br><span class="line">        f[i] = minx;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; f[n] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-      </categories>
-      <tags>
-        <tag>多路归并</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>树相关算法</title>
-    <url>/2024/03/19/59a207d0.html</url>
-    <content><![CDATA[<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><h2 id="根据中后序遍历构造先序遍历"><a href="#根据中后序遍历构造先序遍历" class="headerlink" title="根据中后序遍历构造先序遍历"></a>根据中后序遍历构造先序遍历</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">char</span> data;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">node</span> * lchild, rchild;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> * <span class="built_in">build</span>(<span class="type">char</span> *post,<span class="type">char</span> *in,<span class="type">int</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    node *b;</span><br><span class="line">    <span class="type">char</span> r,*p;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    <span class="keyword">if</span>(le n&lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    r = *(post + len - <span class="number">1</span>); <span class="comment">// 从后序遍历中最后一项直接得到根节点</span></span><br><span class="line">    b=(node *)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(node));</span><br><span class="line">    b-&gt;data = r;</span><br><span class="line">    <span class="keyword">for</span>(p = in;p &lt; in + len;p ++) <span class="comment">// 在中序遍历中找到根节点</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*p == r)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    k = p - in; <span class="comment">//计算左子树的包含节点个数</span></span><br><span class="line">    b-&gt;lchild = <span class="built_in">build</span>(post,in,k);</span><br><span class="line">    b-&gt;rchild = <span class="built_in">build</span>(post + k, p + <span class="number">1</span>, len - k - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-      </categories>
-      <tags>
-        <tag>tree algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>排序算法</title>
-    <url>/2024/03/17/735e5788.html</url>
-    <content><![CDATA[<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> a[N], tmp[N], n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span>* a, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    cnt += <span class="built_in">merge</span>(a, l, mid);</span><br><span class="line">    cnt += cnt + <span class="built_in">merge</span>(a, mid + <span class="number">1</span>, r);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = l, j = mid + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &lt;= a[j]) tmp[k++] = a[i ++];</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            cnt += mid - i + <span class="number">1</span>;</span><br><span class="line">            tmp[k++] = a[j ++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) tmp[k++] = a[i ++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) tmp[k++] = a[j ++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">        a[l + i] = tmp[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="built_in">merge</span>(a, <span class="number">1</span>, n);</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>结论：逆序对的数量 $=$ 使得数组升序时相邻数组元素的最小交换次数, </li>
-</ul>
-<p><strong>证明：</strong></p>
-<blockquote>
-<p>交换数组两个相邻的元素 <code>a[i]</code>, <code>a[i + 1]</code>, 若二者不相等, 那么对数组的逆序对数量的影响为 1, <code>a[i] &gt; a[i + 1]</code> 时逆序对数目减一, 又因为升序数组的逆序对数目为 0, 可知至少交换 k 次相邻元素可使得数组变成升序</p>
-<p>又因为数组不为升序时, 必定存在 <code>a[i] &gt; a[i + 1]</code>, 否则数组就是升序了🤪</p>
-<p>显然, 每次交换都可以找到一个位置存在 <code>a[i] &gt; a[i + 1]</code>, 从而逆序对数目减一, 所以结论成立</p>
-</blockquote>
-<h2 id="树状数组求逆序对"><a href="#树状数组求逆序对" class="headerlink" title="树状数组求逆序对"></a>树状数组求逆序对</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
-        <tag>merge sort</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>扩展欧几里得</title>
-    <url>/2024/04/12/b92b47a1.html</url>
-    <content><![CDATA[<p><img src="D:%5Cstudy%5Cblog%5Cpush_blog%5Csource%5Cimg%5C%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97.assets%5Cimage-20240412165958099.png" alt="image-20240412165958099"></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">exgcd</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> &amp;x, <span class="type">int</span>&amp; y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b == <span class="number">0</span>)&#123;</span><br><span class="line">        x = <span class="number">1</span>, y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> x1, y1, d;</span><br><span class="line">    d = <span class="built_in">exgcd</span>(b, a % b, x1, y1);</span><br><span class="line">    x = y1, y = x1 - a/b * y1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习 数论</category>
-      </categories>
-      <tags>
-        <tag>扩展欧几里得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>离散化算法</title>
-    <url>/2024/03/17/5edaa3b.html</url>
-    <content><![CDATA[<h1 id="一种很新的离散化"><a href="#一种很新的离散化" class="headerlink" title="一种很新的离散化"></a>一种很新的离散化</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">discrete</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++) p[i] = i;</span><br><span class="line">    <span class="built_in">sort</span>(p.<span class="built_in">begin</span>() + <span class="number">1</span>, p.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> x, <span class="type">int</span> y)&#123;</span><br><span class="line">        <span class="keyword">return</span> a[x] &lt; a[y];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++)</span><br><span class="line">        a[p[i]] = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>sort</code> 得到的 <code>p</code> 数组, 其中 <code>p[i]</code> 代表 <code>a</code> 数组中第 <code>i</code> 小的元素的下标</li>
-<li>根据 <code>p</code> 数组, 再用一个 for 循环, 将 <code>a</code> 数组离散化为 $1 \to n$</li>
-</ul>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
-        <tag>离散化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>背包专题</title>
-    <url>/2024/03/15/4f2ce235.html</url>
-    <content><![CDATA[<h1 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h1><p>==从后往前更新==</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v[i]; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h1><p>==从前往后更新==</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h1><p>==分别使用01和多重背包==</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">50000</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[N];</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N], s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; v[i] &gt;&gt; w[i] &gt;&gt; s[i];</span><br><span class="line">        <span class="comment">//如果所有当前项的花费超过总的背包体积，约等于当前项无限多，完全背包处理</span></span><br><span class="line">        <span class="keyword">if</span> (s[i] * v[i] &gt;= m) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//二进制分解使用01背包处理</span></span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s[i];</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v[i]] + w[i] * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c)</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v[i]] + c * w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="混合背包"><a href="#混合背包" class="headerlink" title="混合背包"></a>混合背包</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> dp[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> q[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> hh = <span class="number">-1</span>, tt = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> v, w, s;</span><br><span class="line">        cin &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(s &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = m;j &gt;= v;j --)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = v;j &lt;= m;j ++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s;</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v] + w * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(c)</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v; j--)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v] + c * w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
       </tags>
   </entry>
   <entry>
@@ -1441,6 +1251,183 @@
       </tags>
   </entry>
   <entry>
+    <title>多路归并</title>
+    <url>/2024/03/18/d14b420f.html</url>
+    <content><![CDATA[<ul>
+<li><a href="https://www.acwing.com/problem/content/4659/">例题1, 技能升级</a></li>
+</ul>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并 + 二分</strong></p>
+<blockquote>
+<p>多路等差数列:<br>10 5<br>9 7 5 3 1<br>8 7 6 5 4 3 2 1</p>
+<p>从多个数列(这里是等差数列)中, 找到前 <code>m</code> 大的数, 求和输出答案</p>
+<p>运用二分, 枚举 <code>mid</code>, 并用 <code>check(int mid)</code> 函数判断, 具体过程如下, 对于每个等差数列, 根据 <code>mid</code> 判断其有多少个项大于 <code>mid</code>, 累计数量到 <code>cnt</code>, 循环完成 <code>n</code> 个等差数列后, 判断 <code>cnt &gt;= m</code>,<br>最后使用 <code>ans</code> 累计这些前 <code>m</code> 大的数的和, 注意这里的等差数列中可能包含多个等于 <code>mid</code> 的项, 多出来的数量为 <code>cnt − m</code> 个</p>
+<p><code>ans − (cnt − m) ∗ l</code> 即是最终答案</p>
+</blockquote>
+<p>😥😥😥, 猪脑过载, </p>
+<ul>
+<li><a href="https://www.acwing.com/problem/content/description/58/">例题2</a></li>
+</ul>
+<h1 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并</strong></p>
+<blockquote>
+<p>创建两个队列, 分别存放包含 2, 3, 5这些质因子的数</p>
+<p>一开始, <code>a</code> 队列只有 2 一个数, <code>b</code> 队列只有 3 一个数, <code>c</code> 队列只有 5 一个数</p>
+<p>操作步骤为, 每次从 <code>a, b, c</code> 三个队列中取出队头最小的那个数记为 <code>curr</code>, 同时将 <code>curr * 2</code> 放入 <code>a</code> 队列, <code>curr * 3</code> 放入 <code>b</code> 队列, <code>curr * 5</code> 放入 <code>c</code> 队列. 这样子每个</p>
+</blockquote>
+<ul>
+<li><a href="https://www.acwing.com/problem/content/description/1380/">例题3</a></li>
+</ul>
+<p><strong>多路合并</strong></p>
+<p><strong>定义</strong>: 丑数是一组质数集合 $S$ 中若干个质数(可重复)的乘积, </p>
+<p><strong>题意</strong>: 从给定包含 $k$ 个不同质数的集合 $S = {p_1, p_2,…,p_k}$ 中找到从小到大的第 $K$ 大的丑数</p>
+<h1 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h1><blockquote>
+<p>一个显然的性质是，任意一个丑数都可以由另一个比他小的丑数乘以一个质数因子得到。</p>
+<p>那么构造一个数组 <code>f</code> 用来从小到大更新丑数，<code>f[0]=1</code> 特判, 对于下一个丑数的更新, 构造如下:</p>
+<p>对于每一个质因子<code>a[j]</code>, 我们用已经构造出的前 <code>i</code> 个丑数依次与 <code>a[j]</code> 做乘法, 从而构造出一个新的丑数,  对于每个质数 <code>a[j]</code>, 分别找到丑数 <code>a[j] * f[idx]</code>(满足 <code>a[j]*f[idx]</code> 刚好大于 <code>f[i-1]</code> 即可), 并找到最小的那个丑数作为 <code>f[i]</code>。往后的更新就用不着 <code>idx</code> 之前的丑数了，所以用个 <code>b</code> 数组记录第 <code>i</code> 个质数枚举 <code>f[i]</code> 的下标位置</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> k,n;</span><br><span class="line"><span class="type">int</span> a[N],f[N],b[N];</span><br><span class="line"><span class="comment">// a 数组用于存放给定的质数集合，f 数组从小到大记录丑数</span></span><br><span class="line"><span class="comment">// b 数组记录第 i 个质因子的枚举位置</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; k &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>;i &lt;= k;i++)  cin &gt;&gt; a[i];</span><br><span class="line">    f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++) &#123;</span><br><span class="line">        <span class="type">int</span> minx = <span class="number">2e9</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>;j &lt;= k;j++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (a[j]*f[b[j]] &lt;= f[i<span class="number">-1</span>]) b[j]++;</span><br><span class="line">            minx = <span class="built_in">min</span> (minx,a[j]*f[b[j]]);</span><br><span class="line">        &#125;</span><br><span class="line">        f[i] = minx;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; f[n] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>多路归并</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>离散化算法</title>
+    <url>/2024/03/17/5edaa3b.html</url>
+    <content><![CDATA[<h1 id="一种很新的离散化"><a href="#一种很新的离散化" class="headerlink" title="一种很新的离散化"></a>一种很新的离散化</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">discrete</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++) p[i] = i;</span><br><span class="line">    <span class="built_in">sort</span>(p.<span class="built_in">begin</span>() + <span class="number">1</span>, p.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> x, <span class="type">int</span> y)&#123;</span><br><span class="line">        <span class="keyword">return</span> a[x] &lt; a[y];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++)</span><br><span class="line">        a[p[i]] = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>sort</code> 得到的 <code>p</code> 数组, 其中 <code>p[i]</code> 代表 <code>a</code> 数组中第 <code>i</code> 小的元素的下标</li>
+<li>根据 <code>p</code> 数组, 再用一个 for 循环, 将 <code>a</code> 数组离散化为 $1 \to n$</li>
+</ul>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+        <tag>离散化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树相关算法</title>
+    <url>/2024/03/19/59a207d0.html</url>
+    <content><![CDATA[<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><h2 id="根据中后序遍历构造先序遍历"><a href="#根据中后序遍历构造先序遍历" class="headerlink" title="根据中后序遍历构造先序遍历"></a>根据中后序遍历构造先序遍历</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">char</span> data;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">node</span> * lchild, rchild;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> * <span class="built_in">build</span>(<span class="type">char</span> *post,<span class="type">char</span> *in,<span class="type">int</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    node *b;</span><br><span class="line">    <span class="type">char</span> r,*p;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    <span class="keyword">if</span>(le n&lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    r = *(post + len - <span class="number">1</span>); <span class="comment">// 从后序遍历中最后一项直接得到根节点</span></span><br><span class="line">    b=(node *)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(node));</span><br><span class="line">    b-&gt;data = r;</span><br><span class="line">    <span class="keyword">for</span>(p = in;p &lt; in + len;p ++) <span class="comment">// 在中序遍历中找到根节点</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*p == r)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    k = p - in; <span class="comment">//计算左子树的包含节点个数</span></span><br><span class="line">    b-&gt;lchild = <span class="built_in">build</span>(post,in,k);</span><br><span class="line">    b-&gt;rchild = <span class="built_in">build</span>(post + k, p + <span class="number">1</span>, len - k - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>tree algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>背包专题</title>
+    <url>/2024/03/15/4f2ce235.html</url>
+    <content><![CDATA[<h1 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h1><p>==从后往前更新==</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v[i]; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h1><p>==从前往后更新==</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h1><p>==分别使用01和多重背包==</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">50000</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[N];</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N], s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; v[i] &gt;&gt; w[i] &gt;&gt; s[i];</span><br><span class="line">        <span class="comment">//如果所有当前项的花费超过总的背包体积，约等于当前项无限多，完全背包处理</span></span><br><span class="line">        <span class="keyword">if</span> (s[i] * v[i] &gt;= m) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//二进制分解使用01背包处理</span></span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s[i];</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v[i]] + w[i] * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c)</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v[i]] + c * w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="混合背包"><a href="#混合背包" class="headerlink" title="混合背包"></a>混合背包</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> dp[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> q[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> hh = <span class="number">-1</span>, tt = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> v, w, s;</span><br><span class="line">        cin &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(s &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = m;j &gt;= v;j --)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = v;j &lt;= m;j ++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s;</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v] + w * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(c)</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v; j--)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v] + c * w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>排序算法</title>
+    <url>/2024/03/17/735e5788.html</url>
+    <content><![CDATA[<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> a[N], tmp[N], n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span>* a, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    cnt += <span class="built_in">merge</span>(a, l, mid);</span><br><span class="line">    cnt += cnt + <span class="built_in">merge</span>(a, mid + <span class="number">1</span>, r);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = l, j = mid + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &lt;= a[j]) tmp[k++] = a[i ++];</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            cnt += mid - i + <span class="number">1</span>;</span><br><span class="line">            tmp[k++] = a[j ++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) tmp[k++] = a[i ++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) tmp[k++] = a[j ++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">        a[l + i] = tmp[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="built_in">merge</span>(a, <span class="number">1</span>, n);</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>结论：逆序对的数量 $=$ 使得数组升序时相邻数组元素的最小交换次数, </li>
+</ul>
+<p><strong>证明：</strong></p>
+<blockquote>
+<p>交换数组两个相邻的元素 <code>a[i]</code>, <code>a[i + 1]</code>, 若二者不相等, 那么对数组的逆序对数量的影响为 1, <code>a[i] &gt; a[i + 1]</code> 时逆序对数目减一, 又因为升序数组的逆序对数目为 0, 可知至少交换 k 次相邻元素可使得数组变成升序</p>
+<p>又因为数组不为升序时, 必定存在 <code>a[i] &gt; a[i + 1]</code>, 否则数组就是升序了🤪</p>
+<p>显然, 每次交换都可以找到一个位置存在 <code>a[i] &gt; a[i + 1]</code>, 从而逆序对数目减一, 所以结论成立</p>
+</blockquote>
+<h2 id="树状数组求逆序对"><a href="#树状数组求逆序对" class="headerlink" title="树状数组求逆序对"></a>树状数组求逆序对</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+        <tag>merge sort</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>扩展欧几里得</title>
+    <url>/2024/04/12/b92b47a1.html</url>
+    <content><![CDATA[<p><img src="D:%5Cstudy%5Cblog%5Cpush_blog%5Csource%5Cimg%5C%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97.assets%5Cimage-20240412165958099.png" alt="image-20240412165958099"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">exgcd</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> &amp;x, <span class="type">int</span>&amp; y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b == <span class="number">0</span>)&#123;</span><br><span class="line">        x = <span class="number">1</span>, y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> x1, y1, d;</span><br><span class="line">    d = <span class="built_in">exgcd</span>(b, a % b, x1, y1);</span><br><span class="line">    x = y1, y = x1 - a/b * y1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习 数论</category>
+      </categories>
+      <tags>
+        <tag>扩展欧几里得</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssh访问</title>
+    <url>/2024/03/16/6cede086.html</url>
+    <content><![CDATA[<h1 id="ssh连接过程"><a href="#ssh连接过程" class="headerlink" title="ssh连接过程"></a>ssh连接过程</h1><h2 id="密钥类型"><a href="#密钥类型" class="headerlink" title="密钥类型"></a>密钥类型</h2><p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001710619.png" alt="image-20240316001710619"></p>
+<p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001727647.png" alt="image-20240316001727647"></p>
+<h2 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h2><p><code>SSH(Secure Shell)</code>是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：</p>
+<ol>
+<li><p><strong>客户端发起连接请求：</strong> 用户在本地计算机上的 <code>SSH</code> 客户端（比如 <code>OpenSSH</code> 或 <code>PuTTY</code>）输入远程服务器的地址和用户名，并发起连接请求。</p>
+</li>
+<li><p><strong>服务器端响应：</strong> 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。</p>
+</li>
+<li><p><strong>密钥交换：</strong> 客户端和服务器之间进行密钥交换，确保数据传输的安全性。这个过程通常包括以下步骤：</p>
+<ul>
+<li>客户端向服务器发送一个连接请求，并发送自己支持的加密算法列表。</li>
+<li>服务器从接收到的加密算法列表中选择一个加密算法，并发送自己的公钥给客户端。</li>
+<li>客户端使用服务器的公钥对一个随机生成的<strong>会话密钥(对称密钥)</strong>进行加密，并将加密后的会话密钥发送给服务器。</li>
+<li>服务器使用自己的私钥解密客户端发送的会话密钥。</li>
+</ul>
+</li>
+<li><p><strong>认证：</strong> 客户端将用户凭据（如密码或 SSH 密钥）发送给服务器进行身份认证。如果凭据验证成功，客户端将被授权访问服务器。</p>
+</li>
+<li><p><strong>会话建立：</strong> 认证成功后，客户端和服务器建立起安全的通信会话，可以在该会话中安全地传输数据。</p>
+</li>
+<li><p><strong>数据传输：</strong> 客户端和服务器之间可以安全地传输数据，包括登录命令、文件传输、远程执行命令等操作。</p>
+</li>
+<li><p><strong>连接关闭：</strong> 当用户退出登录或连接超时时，连接被关闭，SSH 会话结束。</p>
+</li>
+</ol>
+<p>总的来说，SSH 连接的流程涉及到密钥交换、身份认证和安全通信会话建立等步骤，确保了数据传输的安全性和可靠性。</p>
+<h1 id="区分authorized-keys与known-hosts文件"><a href="#区分authorized-keys与known-hosts文件" class="headerlink" title="区分authorized_keys与known_hosts文件"></a>区分authorized_keys与known_hosts文件</h1><p><code>authorized_keys</code> 和 <code>known_hosts</code> 都是与 SSH 密钥认证相关的文件，但它们在功能和用途上有所不同：</p>
+<ol>
+<li><p><strong>authorized_keys：</strong></p>
+<ul>
+<li>位置：<code>authorized_keys</code> 文件位于服务器上的用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/authorized_keys</code>）。</li>
+<li>用途：<code>authorized_keys</code> 文件用于存储用户的公钥，以便服务器可以使用这些公钥来验证用户的身份。当用户尝试通过 SSH 连接到服务器时，服务器会检查该用户的 <code>authorized_keys</code> 文件，以确定是否允许连接。如果用户的公钥在 <code>authorized_keys</code> 文件中被发现，则服务器会允许用户连接，并使用相应的私钥进行身份验证。</li>
+</ul>
+</li>
+<li><p><strong>known_hosts：</strong></p>
+<ul>
+<li>位置：<code>known_hosts</code> 文件位于用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/known_hosts</code>）。</li>
+<li>用途：<code>known_hosts</code> 文件用于存储用户访问过的远程主机的公钥信息。当用户首次连接到一个远程主机时，SSH 客户端会将该主机的公钥保存到自己的 <code>known_hosts</code> 文件中。随后，当用户再次连接到同一台主机时，SSH 客户端会使用 <code>known_hosts</code> 文件中存储的公钥来验证主机的身份，以确保连接的安全性。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>authorized_keys</code> 文件用于服务器端存储用户的公钥，用于用户的身份验证；而 <code>known_hosts</code> 文件用于客户端存储已知主机的公钥，用于验证远程主机的身份。这两个文件在 SSH 认证过程中扮演着不同的角色，但都是确保连接安全性的重要组成部分。</p>
+]]></content>
+      <tags>
+        <tag>ssh</tag>
+        <tag>rsa加密</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>高数公式</title>
     <url>/2024/03/17/29c7973.html</url>
     <content><![CDATA[<h1 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h1><script type="math/tex; mode=display">
@@ -1491,6 +1478,19 @@ x^2-\ln^2(1+x)&\sim x^3 \\
       </categories>
       <tags>
         <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git操作</title>
+    <url>/2024/03/15/46390b34.html</url>
+    <content><![CDATA[<ul>
+<li><p><code>git branch -f master HEAD~3</code></p>
+<p>强制使得 <code>master</code> 分支指向 <code>HEAD</code> 向上追溯 $3$ 次的位置</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>git</tag>
       </tags>
   </entry>
 </search>
