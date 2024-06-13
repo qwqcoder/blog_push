@@ -149,3 +149,8 @@ deploy:
   branch: master
   repo: git@github.com:qwqcoder/qwqcoder.github.io.git
 
+# Mermaid (markdwon to flow chart, seq chart, class chart ...)
+mermaid:
+  enable: true
+  # Available themes: default | dark | forest | neutral
+  theme: default
