@@ -1,9 +1,10 @@
 ---
 title: spark
 categories: spark
-tag: 
-	- 分布式计算
-	- spark
+tag:
+  - 分布式计算
+  - spark
+abbrlink: 9d13cf2d
 data:
 ---
 

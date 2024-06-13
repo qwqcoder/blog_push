@@ -2,7 +2,7 @@
 title: Os学习
 tag: os
 categories: 408
-abbrlink:
+abbrlink: a31b9c34
 ---
 
 
@@ -26,7 +26,6 @@ graph LR;
     B-->F[存储器管理];
     B-->G[文件管理];
     B-->H[设备管理];
-
 ```
 
 ## 提供接口
@@ -1308,21 +1307,7 @@ reader() {
 }
 ```
 
-
-
 # 哲学家问题
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
