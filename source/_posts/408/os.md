@@ -1309,13 +1309,7 @@ reader() {
 
 # 哲学家问题
 
-
-
-
-
-
-
-
+![image-20240613201654186](https://s2.loli.net/2024/06/13/qM2zIOWJmufYSx1.png)
 
 
 
